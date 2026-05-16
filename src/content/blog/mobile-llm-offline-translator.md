@@ -4,7 +4,7 @@ description: 复盘 AI 离线翻译 App 的开发过程：如何用 Flutter、ll
 date: 2026-05-17
 category: 极客
 categorySlug: geek
-draft: true
+draft: false
 ---
 
 这篇文章复盘一个**移动端离线大模型**项目：**AI 离线翻译 App**。它的目标很直接：把一个 **440MB** 的翻译专用大模型放到手机里，本地完成翻译，不依赖云端 API。
