@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="本站与我 — 可了个乐" description="关于 Felix、关于本站、联系方式">
+  <article class="about">
+    <h1>本站与我</h1>
+
+    <section class="about-section">
+      <p class="about-lead">一个互联网从业者，AI 应用探索者，热爱科学，极客思维。</p>
+      <p>关注 AI、互联网、产品、以及具有创新性的事物。常出没于 <strong>Bilibili、知乎、X、GitHub</strong>。</p>
+    </section>
+
+    <section class="about-section">
+      <h2>名字的由来</h2>
+      <ul>
+        <li><strong>『可了个乐』/ Kelegele</strong> — 本人正在使用的类 IP 代号，通常展现于互联网</li>
+        <li><strong>Felix / Felicis</strong> — 这几个名称指代在下，用于通信往来、书面表达以及社交平台</li>
+      </ul>
+      <p class="about-origin">站名起源：少不更事，成年前，觉之凡事需冷静，大赞理性之光辉，然有座右铭"不以物喜不以己悲"。然则常无悲喜于表，乃深无情也，其失孩童之乐；年成丈夫才知乐之珍惜，求其甚切，非唯于己也，何者，人之乐乃信可乐也。然，可乐，说之曰，<strong>可了个乐</strong>。</p>
+    </section>
+
+    <section class="about-section">
+      <h2>我在做什么</h2>
+      <ul>
+        <li><strong>AI Agent 开发</strong> — 构建能自主完成复杂任务的智能体系统</li>
+        <li><strong>AI × 产品经理</strong> — 用 AI 重新定义产品工作流，从需求到交付</li>
+        <li><strong>AI 工具探索</strong> — 测试、对比、组合各种 AI 工具，找到最佳实践</li>
+        <li><strong>开源贡献</strong> — 参与 BettaFish、GenericAgent、OpenClaw 等开源项目</li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2>本站可能存在的价值</h2>
+      <ol>
+        <li>记录作者一些学习过程</li>
+        <li>记录一些对现实的感悟</li>
+        <li>发一些牢骚</li>
+        <li>记录一些项目的过程</li>
+        <li>做一些有意义的教程</li>
+        <li>写一些无意义的骚话</li>
+      </ol>
+    </section>
+
+    <section class="about-section">
+      <h2>技术栈</h2>
+      <div class="tags">
+        <span class="tag">TypeScript</span>
+        <span class="tag">Python</span>
+        <span class="tag">Astro</span>
+        <span class="tag">Flutter</span>
+        <span class="tag">Vue</span>
+        <span class="tag">React</span>
+        <span class="tag">Claude</span>
+        <span class="tag">GPT</span>
+        <span class="tag">llama.cpp</span>
+        <span class="tag">Docker</span>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>联系我</h2>
+      <div class="links">
+        <a href="https://github.com/kelegele" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="mailto:felicis1024@gmail.com">Email</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--s-3xl) var(--s-lg) var(--s-4xl);
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -1.28px;
+    line-height: 40px;
+    margin-bottom: var(--s-xl);
+    color: var(--c-ink);
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 28px;
+    margin-bottom: var(--s-md);
+    color: var(--c-ink);
+  }
+
+  .about-section {
+    margin-bottom: var(--s-xl);
+  }
+
+  .about-lead {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    color: var(--c-ink);
+    margin-bottom: var(--s-sm);
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: var(--s-sm);
+    color: var(--c-body);
+  }
+
+  p strong {
+    font-weight: 500;
+    color: var(--c-ink);
+  }
+
+  .about-origin {
+    margin-top: var(--s-md);
+    padding-left: var(--s-md);
+    border-left: 3px solid var(--c-link);
+    color: var(--c-body);
+    font-style: normal;
+  }
+
+  ul, ol {
+    padding-left: var(--s-lg);
+    margin-bottom: var(--s-sm);
+  }
+
+  li {
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: var(--s-xs);
+    color: var(--c-body);
+  }
+
+  li strong {
+    font-weight: 500;
+    color: var(--c-ink);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-xs);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    padding: var(--s-xxs) var(--s-sm);
+    border-radius: var(--r-full);
+    border: 1px solid var(--c-hairline);
+    color: var(--c-body);
+    background: var(--c-canvas-soft);
+  }
+
+  .links {
+    display: flex;
+    gap: var(--s-lg);
+  }
+
+  .links a {
+    color: var(--c-link);
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .links a:hover {
+    color: var(--c-link-deep);
+  }
+</style>

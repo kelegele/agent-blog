@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  category: string;
+  slug: string;
+}
+
+const { title, description, date, category, slug } = Astro.props;
+const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<a href={`/blog/${slug}`} class="article-card">
+  <div class="article-meta">
+    <span class="article-category">{category}</span>
+    <span class="article-dot">·</span>
+    <time class="article-date">{formattedDate}</time>
+  </div>
+  <h3 class="article-title">{title}</h3>
+  <p class="article-desc">{description}</p>
+  <span class="article-arrow">→</span>
+</a>
+
+<style>
+  .article-card {
+    display: block;
+    padding: var(--s-lg) 0;
+    border-bottom: 1px solid var(--c-hairline);
+    transition: padding-left 0.2s;
+  }
+
+  .article-card:hover {
+    padding-left: var(--s-sm);
+  }
+
+  .article-card:hover .article-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--s-xs);
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--c-mute);
+    margin-bottom: var(--s-sm);
+  }
+
+  .article-dot {
+    font-size: 12px;
+  }
+
+  .article-category {
+    color: var(--c-link);
+    font-weight: 500;
+  }
+
+  .article-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 28px;
+    margin-bottom: 6px;
+    color: var(--c-ink);
+  }
+
+  .article-desc {
+    font-size: 14px;
+    color: var(--c-body);
+    line-height: 20px;
+  }
+
+  .article-arrow {
+    display: inline-block;
+    margin-top: var(--s-xs);
+    font-size: 14px;
+    color: var(--c-link);
+    opacity: 0;
+    transform: translateX(0);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout>
+  <section class="hero">
+    <h1 class="hero-title">可了个乐</h1>
+    <p class="hero-subtitle">AI × Creativity</p>
+    <p class="hero-desc">用 AI 探索创造的无限可能</p>
+  </section>
+
+  <section class="posts">
+    <div class="posts-inner">
+      {posts.map((post) => (
+        <ArticleCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          category={post.data.category}
+          slug={post.id}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--s-5xl) var(--s-lg) var(--s-3xl);
+  }
+
+  .hero-title {
+    /* display-xl: 48px/600/48px/-2.4px */
+    font-size: 64px;
+    font-weight: 600;
+    letter-spacing: -3.2px;
+    line-height: 64px;
+    margin-bottom: var(--s-xs);
+    color: var(--c-ink);
+    background: var(--g-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.96px;
+    line-height: 32px;
+    margin-bottom: var(--s-xs);
+    color: var(--c-body);
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--c-mute);
+  }
+
+  .posts-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--s-lg) var(--s-4xl);
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: var(--s-3xl) var(--s-lg) var(--s-xl);
+    }
+
+    .hero-title {
+      font-size: 40px;
+      letter-spacing: -1.6px;
+      line-height: 48px;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      letter-spacing: -0.6px;
+      line-height: 28px;
+    }
+  }
+</style>

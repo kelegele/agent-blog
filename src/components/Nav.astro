@@ -1,0 +1,89 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+const currentPath = Astro.url.pathname;
+---
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <img class="nav-logo" src="/logo-black-bg.png" alt="可了个乐" width="28" height="28" />
+      <span class="nav-name">可了个乐</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class:list={[{ active: currentPath === '/' }]}>Blog</a>
+      <a href="/about" class:list={[{ active: currentPath === '/about/' }]}>About</a>
+      <a href="https://github.com/kelegele" target="_blank" rel="noopener">GitHub ↗</a>
+      <ThemeToggle />
+    </div>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--c-hairline);
+    background: var(--c-canvas);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .nav-inner {
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--s-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--s-xs);
+  }
+
+  .nav-logo {
+    border-radius: var(--r-sm);
+  }
+
+  [data-theme="dark"] .nav-logo {
+    content: url('/logo.png');
+  }
+
+  .nav-name {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--c-body);
+    padding: var(--s-xs) var(--s-sm);
+    border-radius: var(--r-full);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-links a:hover {
+    color: var(--c-ink);
+    background: var(--c-canvas-soft);
+  }
+
+  .nav-links a.active {
+    color: var(--c-ink);
+  }
+</style>

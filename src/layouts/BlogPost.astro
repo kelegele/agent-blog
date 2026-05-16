@@ -1,0 +1,211 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, date, category } = entry.data;
+const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={`${title} — 可了个乐`} description={description}>
+  <article class="post">
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">{category}</span>
+        <span class="post-dot">·</span>
+        <time>{formattedDate}</time>
+      </div>
+      <h1 class="post-title">{title}</h1>
+      <p class="post-description">{description}</p>
+    </header>
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--s-3xl) var(--s-lg) var(--s-4xl);
+  }
+
+  .post-header {
+    margin-bottom: var(--s-2xl);
+    padding-bottom: var(--s-xl);
+    border-bottom: 1px solid var(--c-hairline);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--s-xs);
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--c-mute);
+    margin-bottom: var(--s-md);
+  }
+
+  .post-category {
+    color: var(--c-link);
+    font-weight: 500;
+  }
+
+  .post-dot {
+    font-size: 12px;
+  }
+
+  .post-title {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -1.28px;
+    line-height: 40px;
+    margin-bottom: var(--s-sm);
+    color: var(--c-ink);
+  }
+
+  .post-description {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--c-body);
+  }
+
+  /* ── Markdown content styles ────────────────────────── */
+  .post-content {
+    font-size: 16px;
+    line-height: 28px;
+    color: var(--c-body);
+  }
+
+  .post-content :global(h2) {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.96px;
+    line-height: 32px;
+    margin: var(--s-4xl) 0 var(--s-md);
+    color: var(--c-ink);
+  }
+
+  .post-content :global(h3) {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 28px;
+    margin: var(--s-3xl) 0 var(--s-sm);
+    color: var(--c-ink);
+  }
+
+  .post-content :global(p) {
+    margin-bottom: var(--s-md);
+  }
+
+  .post-content :global(a) {
+    color: var(--c-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+  }
+
+  .post-content :global(a:hover) {
+    color: var(--c-link-deep);
+  }
+
+  .post-content :global(strong) {
+    font-weight: 500;
+    color: var(--c-ink);
+  }
+
+  .post-content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--c-canvas-soft);
+    padding: 2px 6px;
+    border-radius: var(--r-xs);
+    border: 1px solid var(--c-hairline);
+  }
+
+  .post-content :global(pre) {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 20px;
+    background: var(--c-canvas-soft-2);
+    border: 1px solid var(--c-hairline);
+    border-radius: var(--r-md);
+    padding: var(--s-lg);
+    overflow-x: auto;
+    margin: var(--s-lg) 0;
+  }
+
+  .post-content :global(pre code) {
+    background: none;
+    padding: 0;
+    border: none;
+    font-size: 13px;
+  }
+
+  .post-content :global(blockquote) {
+    border-left: 3px solid var(--c-link);
+    padding-left: var(--s-md);
+    color: var(--c-body);
+    margin: var(--s-lg) 0;
+    font-style: normal;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    padding-left: var(--s-lg);
+    margin-bottom: var(--s-md);
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 4px;
+  }
+
+  .post-content :global(hr) {
+    border: none;
+    border-top: 1px solid var(--c-hairline);
+    margin: var(--s-3xl) 0;
+  }
+
+  .post-content :global(img) {
+    max-width: 100%;
+    border-radius: var(--r-md);
+    margin: var(--s-lg) 0;
+  }
+
+  .post-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--s-lg) 0;
+    font-size: 14px;
+  }
+
+  .post-content :global(th) {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-align: left;
+    padding: var(--s-sm) var(--s-md);
+    border-bottom: 1px solid var(--c-hairline);
+    color: var(--c-mute);
+  }
+
+  .post-content :global(td) {
+    padding: var(--s-sm) var(--s-md);
+    border-bottom: 1px solid var(--c-hairline);
+  }
+
+  @media (max-width: 640px) {
+    .post-title {
+      font-size: 24px;
+      letter-spacing: -0.96px;
+      line-height: 32px;
+    }
+  }
+</style>

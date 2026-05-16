@@ -1,0 +1,155 @@
+/* ═══════════════════════════════════════════════════════════
+   Design System — Inspired by Vercel Design Language
+   See DESIGN.md for the full specification.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Colors ─────────────────────────────────────────────── */
+:root {
+  /* Ink & Canvas */
+  --c-primary: #171717;
+  --c-on-primary: #ffffff;
+  --c-ink: #171717;
+  --c-body: #4d4d4d;
+  --c-mute: #888888;
+  --c-hairline: #ebebeb;
+  --c-hairline-strong: #a1a1a1;
+  --c-canvas: #ffffff;
+  --c-canvas-soft: #fafafa;
+  --c-canvas-soft-2: #f5f5f5;
+
+  /* Link */
+  --c-link: #0070f3;
+  --c-link-deep: #0761d1;
+  --c-link-bg-soft: #d3e5ff;
+
+  /* Semantic */
+  --c-success: #0070f3;
+  --c-error: #ee0000;
+  --c-error-soft: #f7d4d6;
+  --c-warning: #f5a623;
+
+  /* Accent palette */
+  --c-violet: #7928ca;
+  --c-violet-soft: #d8ccf1;
+  --c-cyan: #50e3c2;
+  --c-cyan-soft: #aaffec;
+  --c-highlight-pink: #ff0080;
+  --c-highlight-magenta: #eb367f;
+
+  /* Gradient (mesh gradient pairs) */
+  --g-develop: linear-gradient(135deg, #007cf0, #00dfd8);
+  --g-preview: linear-gradient(135deg, #7928ca, #ff0080);
+  --g-ship: linear-gradient(135deg, #ff4d4d, #f9cb28);
+  --g-hero: linear-gradient(135deg, #007cf0, #7928ca, #ff0080, #00dfd8);
+
+  /* Selection */
+  --c-selection-bg: #171717;
+  --c-selection-fg: #f2f2f2;
+
+  /* ── Typography ────────────────────────────────────────── */
+  --font-sans: Geist, Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: Geist Mono, ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+
+  /* ── Rounded ───────────────────────────────────────────── */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-pill: 100px;
+  --r-full: 9999px;
+
+  /* ── Spacing ───────────────────────────────────────────── */
+  --s-xxs: 4px;
+  --s-xs: 8px;
+  --s-sm: 12px;
+  --s-md: 16px;
+  --s-lg: 24px;
+  --s-xl: 32px;
+  --s-2xl: 40px;
+  --s-3xl: 48px;
+  --s-4xl: 64px;
+  --s-5xl: 96px;
+  --s-section: 192px;
+
+  /* ── Layout ────────────────────────────────────────────── */
+  --max-width: 1080px;
+  --content-width: 720px;
+  --nav-height: 64px;
+
+  /* ── Shadow (stacked, Vercel style) ────────────────────── */
+  --shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.04), 0 12px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.04), 0 16px 48px rgba(0, 0, 0, 0.08);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.08), 0 24px 48px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Dark theme ─────────────────────────────────────────── */
+[data-theme="dark"] {
+  --c-primary: #ededed;
+  --c-on-primary: #0a0a0a;
+  --c-ink: #ededed;
+  --c-body: #a1a1a1;
+  --c-mute: #666666;
+  --c-hairline: #262626;
+  --c-hairline-strong: #404040;
+  --c-canvas: #0a0a0a;
+  --c-canvas-soft: #111111;
+  --c-canvas-soft-2: #1a1a1a;
+
+  --c-link: #3291ff;
+  --c-link-deep: #79b8ff;
+  --c-link-bg-soft: rgba(50, 145, 255, 0.15);
+
+  --c-selection-bg: #ededed;
+  --c-selection-fg: #0a0a0a;
+
+  --c-violet-soft: rgba(121, 40, 202, 0.2);
+  --c-cyan-soft: rgba(80, 227, 194, 0.15);
+
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 2px 4px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 4px 8px rgba(0, 0, 0, 0.2), 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.3), 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Reset ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--c-body);
+  background: var(--c-canvas);
+  transition: background 0.2s, color 0.2s;
+}
+
+::selection {
+  background: var(--c-selection-bg);
+  color: var(--c-selection-fg);
+}
+
+/* ── Links ──────────────────────────────────────────────── */
+a {
+  color: var(--c-link);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: var(--c-link-deep);
+}
