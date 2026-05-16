@@ -12,8 +12,12 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const rawBody = post.body ?? '';
+const textLength = typeof rawBody === 'string' ? rawBody.length : 0;
+const readingTime = Math.max(1, Math.ceil(textLength / 400));
 ---
 
-<BlogPost entry={post}>
+<BlogPost entry={post} readingTime={readingTime}>
   <Content />
 </BlogPost>

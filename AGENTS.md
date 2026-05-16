@@ -78,3 +78,10 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 
 ## Design Reference
 - **Nav design reference**: https://vercel.com/blog — mobile nav collapses brand name, reduces gap/padding, and replaces long link text with icons at small viewports. Follow this pattern for responsive nav behavior.
+
+## Design Enforcement Rules
+
+- **All frontend UI/UX MUST strictly conform to the design specification in `DESIGN.md` and `src/styles/global.css`.** No raw/unstyled components allowed. Every visible element must have explicit, intentional styling.
+- **Reference site: [vercel.com/blog](https://vercel.com/blog).** All component design decisions (nav, category tabs, article cards, post layout, copy buttons, typography, spacing, color) must reference and match the Vercel Blog aesthetic.
+- **Zero tolerance for unstyled or default-browser-styled components.** Any component that ships with browser defaults (raw buttons, unstyled links, default form elements, bare text) is a critical bug — treat it as a broken build.
+- Before implementing any new UI component, study the equivalent component on vercel.com/blog first. Match its layout, spacing, typography scale, color tokens, and interaction patterns.

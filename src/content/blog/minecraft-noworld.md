@@ -7,6 +7,7 @@ categorySlug: geek
 draft: false
 ---
 
+
 关于《我的世界（Minecraft）》，它算是我整个成长阶段的启蒙玩物。它点燃了我创造的热情，激发了我往创造发力的引擎，在其自由的游戏空间当中，无数次激起我将 MC 与元宇宙「Metaverse」的浮想。
 
 ![Minecraft](/blog/geek/mc.webp)

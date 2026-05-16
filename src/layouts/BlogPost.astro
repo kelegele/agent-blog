@@ -3,24 +3,42 @@ import BaseLayout from './BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
+  readingTime?: number;
   entry: CollectionEntry<'blog'>;
 }
 
-const { entry } = Astro.props;
+const { entry, readingTime } = Astro.props;
 const { title, description, date, category } = entry.data;
 const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const mdUrl = `/blog/md/${entry.id}`;
 ---
 
 <BaseLayout title={`${title} — 可了个乐`} description={description}>
-  <article class="post">
-    <header class="post-header">
-      <div class="post-meta">
-        <span class="post-category">{category}</span>
-        <span class="post-dot">·</span>
-        <time>{formattedDate}</time>
-      </div>
+  <Fragment slot="head">
+    <link rel="alternate" type="text/markdown" href={mdUrl} />
+  </Fragment>
+  <article class="post" id="post-article">
+    <header class="post-hero">
+      <a class="post-category" href={`/category/${entry.data.categorySlug || category}`}>{category}</a>
       <h1 class="post-title">{title}</h1>
       <p class="post-description">{description}</p>
+      <div class="post-meta">
+        <span>{readingTime || 1} min read</span>
+        <span class="post-dot">·</span>
+        <time>{formattedDate}</time>
+        <span class="post-dot">·</span>
+        <div class="copy-wrap" id="copy-wrap">
+          <button class="copy-trigger" id="copy-trigger" type="button">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.46968 1.46968C10.1433 -0.203925 12.8567 -0.203923 14.5303 1.46968C16.2039 3.14329 16.2039 5.85674 14.5303 7.53034L12.0303 10.0303L10.9697 8.96968L13.4697 6.46968C14.5575 5.38186 14.5575 3.61816 13.4697 2.53034C12.3819 1.44252 10.6182 1.44252 9.53034 2.53034L7.03034 5.03034L5.96968 3.96968L8.46968 1.46968ZM11.5303 5.53034L5.53034 11.5303L4.46968 10.4697L10.4697 4.46968L11.5303 5.53034ZM1.46968 14.5303C3.14329 16.2039 5.85673 16.204 7.53034 14.5303L10.0303 12.0303L8.96968 10.9697L6.46968 13.4697C5.38186 14.5575 3.61816 14.5575 2.53034 13.4697C1.44252 12.3819 1.44252 10.6182 2.53034 9.53034L5.03034 7.03034L3.96968 5.96968L1.46968 8.46968C-0.203923 10.1433 -0.203925 12.8567 1.46968 14.5303Z" fill="currentColor"/></svg>
+            <span class="copy-label" id="copy-label">Copy URL</span>
+            <svg class="copy-chevron" id="copy-chevron" width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.0607 5.49999L13.5303 6.03032L8.7071 10.8535C8.31658 11.2441 7.68341 11.2441 7.29289 10.8535L2.46966 6.03032L1.93933 5.49999L2.99999 4.43933L3.53032 4.96966L7.99999 9.43933L12.4697 4.96966L13 4.43933L14.0607 5.49999Z" fill="currentColor"/></svg>
+          </button>
+          <div class="copy-menu" id="copy-menu">
+            <button class="copy-menu-item" data-action="url">Copy URL</button>
+            <button class="copy-menu-item" data-action="markdown">Copy Markdown</button>
+          </div>
+        </div>
+      </div>
     </header>
     <div class="post-content">
       <slot />
@@ -35,36 +53,33 @@ const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month:
     padding: var(--s-3xl) var(--s-lg) var(--s-4xl);
   }
 
-  .post-header {
-    margin-bottom: var(--s-2xl);
+  .post-hero {
+    text-align: center;
+    margin-bottom: var(--s-3xl);
     padding-bottom: var(--s-xl);
     border-bottom: 1px solid var(--c-hairline);
   }
 
-  .post-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--s-xs);
-    font-size: 12px;
-    font-family: var(--font-mono);
-    color: var(--c-mute);
-    margin-bottom: var(--s-md);
-  }
-
   .post-category {
-    color: var(--c-link);
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
     font-weight: 500;
+    color: var(--c-link);
+    text-decoration: none;
+    margin-bottom: var(--s-md);
+    transition: color 0.15s;
   }
 
-  .post-dot {
-    font-size: 12px;
+  .post-category:hover {
+    color: var(--c-link-deep);
   }
 
   .post-title {
-    font-size: 32px;
+    font-size: 40px;
     font-weight: 600;
-    letter-spacing: -1.28px;
-    line-height: 40px;
+    letter-spacing: -1.6px;
+    line-height: 48px;
     margin-bottom: var(--s-sm);
     color: var(--c-ink);
   }
@@ -74,138 +89,168 @@ const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month:
     font-weight: 400;
     line-height: 28px;
     color: var(--c-body);
-  }
-
-  /* ── Markdown content styles ────────────────────────── */
-  .post-content {
-    font-size: 16px;
-    line-height: 28px;
-    color: var(--c-body);
-  }
-
-  .post-content :global(h2) {
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: -0.96px;
-    line-height: 32px;
-    margin: var(--s-4xl) 0 var(--s-md);
-    color: var(--c-ink);
-  }
-
-  .post-content :global(h3) {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.6px;
-    line-height: 28px;
-    margin: var(--s-3xl) 0 var(--s-sm);
-    color: var(--c-ink);
-  }
-
-  .post-content :global(p) {
     margin-bottom: var(--s-md);
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .post-content :global(a) {
-    color: var(--c-link);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    transition: color 0.15s;
-  }
-
-  .post-content :global(a:hover) {
-    color: var(--c-link-deep);
-  }
-
-  .post-content :global(strong) {
-    font-weight: 500;
-    color: var(--c-ink);
-  }
-
-  .post-content :global(code) {
-    font-family: var(--font-mono);
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-xs);
     font-size: 13px;
-    background: var(--c-canvas-soft);
-    padding: 2px 6px;
-    border-radius: var(--r-xs);
-    border: 1px solid var(--c-hairline);
-  }
-
-  .post-content :global(pre) {
     font-family: var(--font-mono);
-    font-size: 13px;
-    line-height: 20px;
-    background: var(--c-canvas-soft-2);
-    border: 1px solid var(--c-hairline);
-    border-radius: var(--r-md);
-    padding: var(--s-lg);
-    overflow-x: auto;
-    margin: var(--s-lg) 0;
-  }
-
-  .post-content :global(pre code) {
-    background: none;
-    padding: 0;
-    border: none;
-    font-size: 13px;
-  }
-
-  .post-content :global(blockquote) {
-    border-left: 3px solid var(--c-link);
-    padding-left: var(--s-md);
-    color: var(--c-body);
-    margin: var(--s-lg) 0;
-    font-style: normal;
-  }
-
-  .post-content :global(ul),
-  .post-content :global(ol) {
-    padding-left: var(--s-lg);
-    margin-bottom: var(--s-md);
-  }
-
-  .post-content :global(li) {
-    margin-bottom: 4px;
-  }
-
-  .post-content :global(hr) {
-    border: none;
-    border-top: 1px solid var(--c-hairline);
-    margin: var(--s-3xl) 0;
-  }
-
-  .post-content :global(img) {
-    max-width: 100%;
-    border-radius: var(--r-md);
-    margin: var(--s-lg) 0;
-  }
-
-  .post-content :global(table) {
-    width: 100%;
-    border-collapse: collapse;
-    margin: var(--s-lg) 0;
-    font-size: 14px;
-  }
-
-  .post-content :global(th) {
-    font-size: 12px;
-    font-family: var(--font-mono);
-    font-weight: 500;
-    text-align: left;
-    padding: var(--s-sm) var(--s-md);
-    border-bottom: 1px solid var(--c-hairline);
     color: var(--c-mute);
   }
 
-  .post-content :global(td) {
-    padding: var(--s-sm) var(--s-md);
-    border-bottom: 1px solid var(--c-hairline);
+  .post-dot {
+    color: var(--c-hairline-strong);
   }
 
+  .copy-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .copy-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-link);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+
+  .copy-trigger:hover {
+    color: var(--c-link-deep);
+  }
+
+  .copy-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 160px;
+    background: var(--c-canvas);
+    border: 1px solid var(--c-hairline);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-float);
+    padding: 4px 0;
+    z-index: 20;
+  }
+
+  .copy-menu-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--c-body);
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-menu-item:hover {
+    background: var(--c-canvas-soft);
+    color: var(--c-ink);
+  }
+
+  .copy-menu-item:first-child { border-radius: var(--r-sm) var(--r-sm) 0 0; }
+  .copy-menu-item:last-child { border-radius: 0 0 var(--r-sm) var(--r-sm); }
+
+  .post-content {
+    font-size: 17px;
+    line-height: 30px;
+    color: var(--c-body);
+  }
+
+  .post-content :global(h2) { font-size: 24px; font-weight: 600; letter-spacing: -0.96px; line-height: 32px; margin: var(--s-4xl) 0 var(--s-md); color: var(--c-ink); }
+  .post-content :global(h3) { font-size: 20px; font-weight: 600; letter-spacing: -0.6px; line-height: 28px; margin: var(--s-3xl) 0 var(--s-sm); color: var(--c-ink); }
+  .post-content :global(p) { margin-bottom: var(--s-md); }
+  .post-content :global(a) { color: var(--c-link); text-decoration: underline; text-underline-offset: 2px; transition: color 0.15s; }
+  .post-content :global(a:hover) { color: var(--c-link-deep); }
+  .post-content :global(strong) { font-weight: 500; color: var(--c-ink); }
+  .post-content :global(code) { font-family: var(--font-mono); font-size: 13px; background: var(--c-canvas-soft); padding: 2px 6px; border-radius: var(--r-xs); border: 1px solid var(--c-hairline); }
+  .post-content :global(pre) { font-family: var(--font-mono); font-size: 13px; line-height: 20px; background: var(--c-canvas-soft-2); border: 1px solid var(--c-hairline); border-radius: var(--r-md); padding: var(--s-lg); overflow-x: auto; margin: var(--s-lg) 0; }
+  .post-content :global(pre code) { background: none; padding: 0; border: none; }
+  .post-content :global(blockquote) { border-left: 3px solid var(--c-link); padding-left: var(--s-md); color: var(--c-body); margin: var(--s-lg) 0; font-style: normal; }
+  .post-content :global(ul), .post-content :global(ol) { padding-left: var(--s-lg); margin-bottom: var(--s-md); }
+  .post-content :global(li) { margin-bottom: 4px; }
+  .post-content :global(hr) { border: none; border-top: 1px solid var(--c-hairline); margin: var(--s-3xl) 0; }
+  .post-content :global(img) { max-width: 100%; border-radius: var(--r-md); margin: var(--s-lg) 0; }
+  .post-content :global(table) { width: 100%; border-collapse: collapse; margin: var(--s-lg) 0; font-size: 14px; }
+  .post-content :global(th) { font-size: 12px; font-family: var(--font-mono); font-weight: 500; text-align: left; padding: var(--s-sm) var(--s-md); border-bottom: 1px solid var(--c-hairline); color: var(--c-mute); }
+  .post-content :global(td) { padding: var(--s-sm) var(--s-md); border-bottom: 1px solid var(--c-hairline); }
+
   @media (max-width: 640px) {
-    .post-title {
-      font-size: 24px;
-      letter-spacing: -0.96px;
-      line-height: 32px;
-    }
+    .post { padding: var(--s-xl) var(--s-md) var(--s-3xl); }
+    .post-title { font-size: 28px; letter-spacing: -1.12px; line-height: 36px; }
+    .post-description { font-size: 16px; line-height: 24px; }
+    .post-content { font-size: 16px; line-height: 28px; }
   }
 </style>
+
+<script>
+  const trigger = document.getElementById('copy-trigger');
+  const menu = document.getElementById('copy-menu');
+  const label = document.getElementById('copy-label');
+  const chevron = document.getElementById('copy-chevron');
+
+  // Get markdown URL from <link rel="alternate" type="text/markdown">
+  const mdLink = document.querySelector('link[rel="alternate"][type="text/markdown"]');
+  const mdUrl = (mdLink as HTMLLinkElement)?.href;
+
+  if (menu) menu.style.display = 'none';
+
+  trigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!menu) return;
+    const isOpen = menu.style.display === 'block';
+    menu.style.display = isOpen ? 'none' : 'block';
+    if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+  });
+
+  document.addEventListener('click', () => {
+    if (menu) menu.style.display = 'none';
+    if (chevron) chevron.style.transform = '';
+  });
+
+  menu?.addEventListener('click', async (e) => {
+    const item = (e.target as HTMLElement).closest<HTMLButtonElement>('.copy-menu-item');
+    if (!item) return;
+
+    const action = item.dataset.action;
+    try {
+      if (action === 'url') {
+        await navigator.clipboard.writeText(window.location.href);
+      } else if (action === 'markdown' && mdUrl) {
+        const res = await fetch(mdUrl);
+        const md = await res.text();
+        await navigator.clipboard.writeText(md);
+      }
+      menu.style.display = 'none';
+      if (chevron) chevron.style.transform = '';
+      if (label) {
+        label.textContent = 'Copied!';
+        label.style.color = 'var(--c-success)';
+        setTimeout(() => {
+          label.textContent = 'Copy URL';
+          label.style.color = '';
+        }, 2000);
+      }
+    } catch {}
+  });
+</script>
