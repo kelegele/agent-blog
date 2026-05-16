@@ -26,3 +26,4 @@ pnpm-debug.log*
 dist/
 node_modules/
 .vercel
+skill/DESIGN-JOURNAL.md
