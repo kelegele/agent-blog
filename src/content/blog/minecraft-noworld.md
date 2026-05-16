@@ -1,5 +1,5 @@
 ---
-title: Minecraft 小服「nOWorld」—已关服 R.I.P.
+title: [Minecraft](https://www.minecraft.net/) 小服「nOWorld」—已关服 R.I.P.
 description: 关于我与 Minecraft 的故事，以及那台曾经存在的小服务器
 date: 2022-01-26
 category: 极客
@@ -8,7 +8,7 @@ draft: false
 ---
 
 
-关于《我的世界（Minecraft）》，它算是我整个成长阶段的启蒙玩物。它点燃了我创造的热情，激发了我往创造发力的引擎，在其自由的游戏空间当中，无数次激起我将 MC 与元宇宙「Metaverse」的浮想。
+关于《我的世界（Minecraft）》，它算是我整个成长阶段的启蒙玩物。它点燃了我创造的热情，激发了我往创造发力的引擎，在其自由的游戏空间当中，无数次激起我将 MC 与元宇宙「[Metaverse](https://en.wikipedia.org/wiki/Metaverse)」的浮想。
 
 ![Minecraft](/blog/geek/mc.webp)
 

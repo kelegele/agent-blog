@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "blog-publish": {
+      "source": "kelegele/agent-blog",
+      "sourceType": "github",
+      "skillPath": "skill/SKILL.md",
+      "computedHash": "85a062aa6ec25c61b88903cce52cef3f59d5956d511727cd517adc15a61a9a49"
+    }
+  }
+}
