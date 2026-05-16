@@ -253,6 +253,7 @@ about controversial topics.
 | Natural keyword density | Mention key terms naturally 3–5 times across the article — don't stuff |
 | Internal links | Link to other blog posts when relevant: `[相关文章](/blog/{slug})` |
 | External authority links | Link to docs, papers, or official sources when making claims |
+- External term linking     | First mention of any tool/framework/company/concept must link to its official site or docs | ❌ Warn
 | Image alt text | Every `![]()` must have descriptive alt text containing relevant keywords |
 | First paragraph hook | The opening paragraph should contain the primary keyword and clearly state what the article covers |
 
@@ -496,6 +497,7 @@ Run every check below. Fix issues inline if possible, then report results.
 | 17 | Empty sections | No heading followed by zero content before next heading | ❌ Warn |
 | 18 | Image paths | All `![]()` paths start with `/blog/` or are external URLs | ✅ Fix paths |
 | 19 | First paragraph | Contains the article's primary topic/keyword | ❌ Warn |
+| 20 | External links          | First mention of tools/frameworks/companies/concepts has hyperlink to official source | ❌ Warn
 
 **SEO/GEO quality (WARN — non-blocking):**
 

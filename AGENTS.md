@@ -85,3 +85,19 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 - **Reference site: [vercel.com/blog](https://vercel.com/blog).** All component design decisions (nav, category tabs, article cards, post layout, copy buttons, typography, spacing, color) must reference and match the Vercel Blog aesthetic.
 - **Zero tolerance for unstyled or default-browser-styled components.** Any component that ships with browser defaults (raw buttons, unstyled links, default form elements, bare text) is a critical bug — treat it as a broken build.
 - Before implementing any new UI component, study the equivalent component on vercel.com/blog first. Match its layout, spacing, typography scale, color tokens, and interaction patterns.
+
+## External Reference Linking
+
+Every blog post **must** add hyperlinks to any third-party tools, frameworks, libraries, standards, or external resources mentioned in the article. This applies to both new articles and edits.
+
+**Examples:**
+- Mention "Astro" → link to `https://astro.build`
+- Mention "GitHub API" → link to `https://docs.github.com/en/rest`
+- Mention "Vercel" → link to `https://vercel.com`
+- Mention a paper or spec → link to the original source
+
+**Rules:**
+- First mention of a term gets the link; subsequent mentions do not need to be linked.
+- Use meaningful link text, not bare URLs: `[Astro](https://astro.build)` not `<https://astro.build>`.
+- This rule exists for SEO (outbound authority links signal topic relevance) and reader experience (clickable references).
+- The skill must validate this in its format-checking phase.
