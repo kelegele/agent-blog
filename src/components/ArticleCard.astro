@@ -11,7 +11,11 @@ const { title, description, date, category, slug } = Astro.props;
 const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<a href={`/blog/${slug}`} class="article-card">
+<a
+  href={`/blog/${slug}`}
+  class="article-card"
+  data-category={category}
+>
   <div class="article-meta">
     <span class="article-category">{category}</span>
     <span class="article-dot">·</span>

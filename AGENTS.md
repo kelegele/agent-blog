@@ -75,3 +75,6 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 - **Predecessor project**: `blog.kelegele.com (archived as `github.com/kelegele/blog-2019-archived`)` at `/Users/fh/Projects/blog.kelegele.com` (Vuepress + vuepress-theme-hope).
 - The logo assets (`logo.png`, `logo-black-bg.png`) and favicon are sourced from this predecessor project.
 - The old blog's Vercel comment system (Giscus on `kelegele/blog-comment`) and other integrations may be ported later.
+
+## Design Reference
+- **Nav design reference**: https://vercel.com/blog — mobile nav collapses brand name, reduces gap/padding, and replaces long link text with icons at small viewports. Follow this pattern for responsive nav behavior.

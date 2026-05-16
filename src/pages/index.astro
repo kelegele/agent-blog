@@ -3,8 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const categories = ['全部', ...new Set(allPosts.map(p => p.data.category))];
 ---
 
 <BaseLayout>
@@ -16,15 +18,26 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
   <section class="posts">
     <div class="posts-inner">
-      {posts.map((post) => (
-        <ArticleCard
-          title={post.data.title}
-          description={post.data.description}
-          date={post.data.date}
-          category={post.data.category}
-          slug={post.id}
-        />
-      ))}
+      <div class="category-bar" id="category-bar">
+        {categories.map((cat) => (
+          <button
+            class:list={['category-pill', { active: cat === '全部' }]}
+            data-category={cat}
+          >{cat}</button>
+        ))}
+      </div>
+
+      <div class="article-list">
+        {allPosts.map((post) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            category={post.data.category}
+            slug={post.id}
+          />
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -37,7 +50,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   }
 
   .hero-title {
-    /* display-xl: 48px/600/48px/-2.4px */
     font-size: 64px;
     font-weight: 600;
     letter-spacing: -3.2px;
@@ -72,6 +84,51 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     padding: 0 var(--s-lg) var(--s-4xl);
   }
 
+  /* ── Category Bar ──────────────────────── */
+  .category-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: var(--s-sm);
+    margin-bottom: var(--s-xl);
+    border-bottom: 1px solid var(--c-hairline);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .category-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-pill {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--c-mute);
+    background: none;
+    border: none;
+    padding: var(--s-xs) var(--s-sm);
+    border-radius: var(--r-full);
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    line-height: 20px;
+  }
+
+  .category-pill:hover {
+    color: var(--c-ink);
+  }
+
+  .category-pill.active {
+    color: var(--c-ink);
+    background: var(--c-canvas-soft);
+  }
+
+  .article-card-hidden {
+    display: none;
+  }
+
   @media (max-width: 640px) {
     .hero {
       padding: var(--s-3xl) var(--s-lg) var(--s-xl);
@@ -88,5 +145,33 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       letter-spacing: -0.6px;
       line-height: 28px;
     }
+
+    .posts-inner {
+      padding: 0 var(--s-md) var(--s-3xl);
+    }
+
+    .category-bar {
+      margin-bottom: var(--s-lg);
+    }
   }
 </style>
+
+<script>
+  const bar = document.getElementById('category-bar');
+  const cards = document.querySelectorAll<HTMLElement>('.article-card');
+
+  bar?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.category-pill');
+    if (!btn) return;
+
+    // Toggle active pill
+    bar.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cat = btn.dataset.category;
+    cards.forEach(card => {
+      const cardCat = (card as HTMLElement).dataset.category;
+      card.classList.toggle('article-card-hidden', cat !== '全部' && cardCat !== cat);
+    });
+  });
+</script>

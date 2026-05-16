@@ -12,7 +12,10 @@ const currentPath = Astro.url.pathname;
     <div class="nav-links">
       <a href="/" class:list={[{ active: currentPath === '/' }]}>Blog</a>
       <a href="/about" class:list={[{ active: currentPath === '/about/' }]}>About</a>
-      <a href="https://github.com/kelegele" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://github.com/kelegele" target="_blank" rel="noopener" aria-label="GitHub">
+        <span class="link-label-full">GitHub ↗</span>
+        <span class="link-label-short" aria-hidden="true">GH ↗</span>
+      </a>
       <ThemeToggle />
     </div>
   </div>
@@ -46,6 +49,7 @@ const currentPath = Astro.url.pathname;
     display: flex;
     align-items: center;
     gap: var(--s-xs);
+    flex-shrink: 0;
   }
 
   .nav-logo {
@@ -67,6 +71,7 @@ const currentPath = Astro.url.pathname;
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
   }
 
   .nav-links a {
@@ -76,6 +81,7 @@ const currentPath = Astro.url.pathname;
     padding: var(--s-xs) var(--s-sm);
     border-radius: var(--r-full);
     transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
   }
 
   .nav-links a:hover {
@@ -85,5 +91,37 @@ const currentPath = Astro.url.pathname;
 
   .nav-links a.active {
     color: var(--c-ink);
+  }
+
+  .link-label-short {
+    display: none;
+  }
+
+  /* ── Mobile ─────────────────────────────── */
+  @media (max-width: 480px) {
+    .nav-inner {
+      padding: 0 var(--s-sm);
+    }
+
+    .nav-name {
+      display: none;
+    }
+
+    .nav-links {
+      gap: 2px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      padding: var(--s-xxs) var(--s-xs);
+    }
+
+    .link-label-full {
+      display: none;
+    }
+
+    .link-label-short {
+      display: inline;
+    }
   }
 </style>
