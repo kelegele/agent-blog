@@ -3,6 +3,7 @@ title: 新的开始，或说是提升
 description: 产品之路是我对创造力的追求与执着，更是我的一个提升
 date: 2021-08-11
 category: 创造力
+categorySlug: creativity
 draft: false
 ---
 

@@ -1,15 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ArticleCard from '../components/ArticleCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const slugs = [...new Set(allPosts.map(p => p.data.categorySlug || p.data.category))];
+  return slugs.map(cat => ({ params: { cat } }));
+}
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const categories = [...new Set(allPosts.map(p => p.data.categorySlug || p.data.category))];
+const { cat } = Astro.params;
+const filteredPosts = allPosts.filter(p => (p.data.categorySlug || p.data.category) === cat);
+
 const categoryMap = Object.fromEntries(
   allPosts.map(p => [p.data.categorySlug || p.data.category, p.data.category])
 );
+const categories = [...new Set(allPosts.map(p => p.data.categorySlug || p.data.category))];
 ---
 
 <BaseLayout>
@@ -22,14 +31,14 @@ const categoryMap = Object.fromEntries(
   <section class="posts">
     <div class="posts-inner">
       <nav class="cat-nav">
-        <a class="cat-link active" href="/">全部</a>
+        <a class="cat-link" href="/">全部</a>
         {categories.map((c) => (
-          <a class="cat-link" href={`/category/${c}`}>{categoryMap[c]}</a>
+          <a class:list={['cat-link', { active: c === cat }]} href={`/category/${c}`}>{categoryMap[c]}</a>
         ))}
       </nav>
 
       <div class="article-list">
-        {allPosts.map((post) => (
+        {filteredPosts.map((post) => (
           <ArticleCard
             title={post.data.title}
             description={post.data.description}
@@ -39,6 +48,10 @@ const categoryMap = Object.fromEntries(
           />
         ))}
       </div>
+
+      {filteredPosts.length === 0 && (
+        <p class="empty">暂无文章</p>
+      )}
     </div>
   </section>
 </BaseLayout>
@@ -120,6 +133,12 @@ const categoryMap = Object.fromEntries(
   .cat-link.active {
     color: var(--c-ink);
     font-weight: 500;
+  }
+
+  .empty {
+    padding: var(--s-3xl) 0;
+    text-align: center;
+    color: var(--c-mute);
   }
 
   @media (max-width: 640px) {

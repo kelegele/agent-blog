@@ -3,6 +3,7 @@ title: Minecraft 小服「nOWorld」—已关服 R.I.P.
 description: 关于我与 Minecraft 的故事，以及那台曾经存在的小服务器
 date: 2022-01-26
 category: 极客
+categorySlug: geek
 draft: false
 ---
 
