@@ -6,16 +6,13 @@ const currentPath = Astro.url.pathname;
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-brand">
-      <img class="nav-logo" src="/logo-black-bg.png" alt="可了个乐" width="28" height="28" />
+      <img class="nav-logo" src="/logo-black-bg.png" alt="" width="24" height="24" />
       <span class="nav-name">可了个乐</span>
     </a>
     <div class="nav-links">
       <a href="/" class:list={[{ active: currentPath === '/' }]}>Blog</a>
       <a href="/about" class:list={[{ active: currentPath === '/about/' }]}>About</a>
-      <a href="https://github.com/kelegele" target="_blank" rel="noopener" aria-label="GitHub">
-        <span class="link-label-full">GitHub ↗</span>
-        <span class="link-label-short" aria-hidden="true">GH ↗</span>
-      </a>
+      <a href="https://github.com/kelegele" target="_blank" rel="noopener">GitHub<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
       <ThemeToggle />
     </div>
   </div>
@@ -70,18 +67,24 @@ const currentPath = Astro.url.pathname;
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
+    gap: 0;
   }
 
   .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     font-size: 14px;
     font-weight: 400;
-    color: var(--c-body);
-    padding: var(--s-xs) var(--s-sm);
+    color: var(--c-mute);
+    padding: 6px 12px;
     border-radius: var(--r-full);
     transition: color 0.15s, background 0.15s;
     white-space: nowrap;
+  }
+
+  .nav-links a svg {
+    opacity: 0.5;
   }
 
   .nav-links a:hover {
@@ -93,35 +96,18 @@ const currentPath = Astro.url.pathname;
     color: var(--c-ink);
   }
 
-  .link-label-short {
-    display: none;
-  }
-
-  /* ── Mobile ─────────────────────────────── */
-  @media (max-width: 480px) {
+  @media (max-width: 520px) {
     .nav-inner {
-      padding: 0 var(--s-sm);
+      padding: 0 var(--s-md);
     }
 
     .nav-name {
       display: none;
     }
 
-    .nav-links {
-      gap: 2px;
-    }
-
     .nav-links a {
       font-size: 13px;
-      padding: var(--s-xxs) var(--s-xs);
-    }
-
-    .link-label-full {
-      display: none;
-    }
-
-    .link-label-short {
-      display: inline;
+      padding: 6px 8px;
     }
   }
 </style>

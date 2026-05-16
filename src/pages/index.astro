@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const categories = ['全部', ...new Set(allPosts.map(p => p.data.category))];
+const categories = [...new Set(allPosts.map(p => p.data.category))];
 ---
 
 <BaseLayout>
@@ -18,14 +18,12 @@ const categories = ['全部', ...new Set(allPosts.map(p => p.data.category))];
 
   <section class="posts">
     <div class="posts-inner">
-      <div class="category-bar" id="category-bar">
+      <nav class="category-nav">
+        <button class="cat-link active" data-category="">全部</button>
         {categories.map((cat) => (
-          <button
-            class:list={['category-pill', { active: cat === '全部' }]}
-            data-category={cat}
-          >{cat}</button>
+          <button class="cat-link" data-category={cat}>{cat}</button>
         ))}
-      </div>
+      </nav>
 
       <div class="article-list">
         {allPosts.map((post) => (
@@ -84,47 +82,54 @@ const categories = ['全部', ...new Set(allPosts.map(p => p.data.category))];
     padding: 0 var(--s-lg) var(--s-4xl);
   }
 
-  /* ── Category Bar ──────────────────────── */
-  .category-bar {
+  /* ── Category Nav (Vercel Blog style) ──── */
+  .category-nav {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 6px;
-    overflow-x: auto;
-    padding-bottom: var(--s-sm);
-    margin-bottom: var(--s-xl);
+    align-items: center;
+    gap: 0;
     border-bottom: 1px solid var(--c-hairline);
+    padding-bottom: 0;
+    margin-bottom: 0;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
-  .category-bar::-webkit-scrollbar {
+  .category-nav::-webkit-scrollbar {
     display: none;
   }
 
-  .category-pill {
+  .cat-link {
     flex-shrink: 0;
-    font-family: var(--font-mono);
-    font-size: 13px;
+    font-family: var(--font-sans);
+    font-size: 14px;
     font-weight: 400;
+    line-height: 20px;
     color: var(--c-mute);
     background: none;
     border: none;
-    padding: var(--s-xs) var(--s-sm);
-    border-radius: var(--r-full);
+    border-bottom: 2px solid transparent;
+    padding: 12px 16px;
     cursor: pointer;
-    transition: color 0.15s, background 0.15s;
-    line-height: 20px;
+    transition: color 0.15s;
+    position: relative;
   }
 
-  .category-pill:hover {
+  .cat-link:hover {
     color: var(--c-ink);
   }
 
-  .category-pill.active {
+  .cat-link.active {
     color: var(--c-ink);
-    background: var(--c-canvas-soft);
+    font-weight: 500;
+    border-bottom-color: var(--c-ink);
   }
 
+  [data-theme="dark"] .cat-link.active {
+    border-bottom-color: var(--c-ink);
+  }
+
+  /* ── Article hidden state ──────────────── */
   .article-card-hidden {
     display: none;
   }
@@ -150,28 +155,28 @@ const categories = ['全部', ...new Set(allPosts.map(p => p.data.category))];
       padding: 0 var(--s-md) var(--s-3xl);
     }
 
-    .category-bar {
-      margin-bottom: var(--s-lg);
+    .cat-link {
+      font-size: 13px;
+      padding: 10px 12px;
     }
   }
 </style>
 
 <script>
-  const bar = document.getElementById('category-bar');
+  const nav = document.querySelector('.category-nav');
   const cards = document.querySelectorAll<HTMLElement>('.article-card');
 
-  bar?.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.category-pill');
+  nav?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.cat-link');
     if (!btn) return;
 
-    // Toggle active pill
-    bar.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
+    nav.querySelectorAll('.cat-link').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     const cat = btn.dataset.category;
     cards.forEach(card => {
-      const cardCat = (card as HTMLElement).dataset.category;
-      card.classList.toggle('article-card-hidden', cat !== '全部' && cardCat !== cat);
+      const cardCat = card.dataset.category;
+      card.classList.toggle('article-card-hidden', cat !== '' && cardCat !== cat);
     });
   });
 </script>
