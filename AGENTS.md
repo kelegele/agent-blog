@@ -69,3 +69,9 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 - Shadows: Use stacked shadows (multiple small offsets with inset hairline rings) rather than single heavy drop shadows.
 - Headlines are sentence-case, never all-caps.
 - Button/pill rounding: `--r-pill` (100px) for marketing CTAs, `--r-full` for nav buttons. Do not mix scales on the same surface.
+
+## Project History
+
+- **Predecessor project**: `blog.kelegele.com` at `/Users/fh/Projects/blog.kelegele.com` (Vuepress + vuepress-theme-hope).
+- The logo assets (`logo.png`, `logo-black-bg.png`) and favicon are sourced from this predecessor project.
+- The old blog's Vercel comment system (Giscus on `kelegele/blog-comment`) and other integrations may be ported later.
