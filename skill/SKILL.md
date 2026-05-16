@@ -1,8 +1,10 @@
 ---
 name: blog-publish
-version: 1.4.0
+version: 1.4.1
 description: |
-  Generate and publish blog posts from any project to kelegele/agent-blog. Triggers on:
+  Generate and publish blog posts from any project to kelegele/agent-blog.
+  ZERO DEPENDENCIES — does NOT require Node.js, pnpm, git, or any local build tools.
+  Works with only a browser and a GitHub token. Triggers on:
   "写篇博客", "blog this", "发博文", "publish blog", "把项目写成文章", "写篇文章",
   "blog it", "post article", "新文章", "new blog post", "blog this project",
   "发一篇博文", "写一篇博文", "blog post about this".
@@ -14,6 +16,13 @@ description: |
 ---
 
 # blog-publish — Generate & Publish Blog Posts
+
+> **⚠️ DO NOT assume Node.js, pnpm, git, or any build tools are required.**
+> This skill has three access tiers. The lowest tier (Tier 3) works with
+> **only `curl` + `jq` + a GitHub token**. No git, no Node.js, no pnpm,
+> no local clone. Always check what's available and use the highest tier
+> that works. NEVER tell the user they must install git/Node/pnpm — they
+> are NOT required.
 
 Turn any project or idea into a polished blog post and publish it to
 `kelegele/agent-blog`.
@@ -32,7 +41,9 @@ Turn any project or idea into a polished blog post and publish it to
 
 ## Access Tiers — Read & Write the Blog Repo
 
-Three tiers, highest available wins.
+Three tiers. Always try **Tier 1 → 2 → 3** and use the highest one that works.
+**NEVER tell the user they need to install git, Node.js, or pnpm.** If Tier 1
+or 2 isn't available, use Tier 3 silently.
 
 ### Tier 1 — Existing Local Clone (fastest)
 
@@ -73,9 +84,12 @@ git checkout
 
 Cleanup: `rm -rf "$BLOG_TMP"` after publish.
 
-### Tier 3 — Pure GitHub REST API (zero local tools)
+### Tier 3 — Pure GitHub REST API (ZERO DEPENDENCIES)
 
-No git, no pnpm. Requires `curl` + `jq` + `GITHUB_TOKEN` env var (PAT with `repo` scope).
+**No git, no Node.js, no pnpm, no local tools required.**
+Only needs `curl` + `jq` (pre-installed on macOS/Linux) and a GitHub PAT.
+
+**Required:** `GITHUB_TOKEN` or `GH_TOKEN` env var — a GitHub PAT with `repo` scope.
 Create at: `https://github.com/settings/tokens/new?scopes=repo&description=blog-publish-skill`
 
 **Permission check:**
@@ -194,17 +208,9 @@ Read these files from the blog repo (via filesystem for Tier 1/2, via API for Ti
 
 ### Scoped Style Handling
 
-Astro components use scoped CSS (e.g. `.post-title` in `BlogPost.astro`). In the
-preview HTML, these styles must work without Astro's build-time scoping. Two options:
-
-- **Simple:** Include all scoped `<style>` blocks as-is. Class names like
-  `.post`, `.post-hero`, `.post-title`, `.nav`, `.footer` are unique enough
-  that they won't conflict across components in a single-page preview.
-- **If conflicts occur:** Prefix selectors with component context
-  (e.g. `nav .nav-inner`).
-
-In practice, this blog's component classes are already well-namespaced and won't
-conflict. Include them as-is.
+Astro components use scoped CSS. In the preview HTML, include all scoped `<style>`
+blocks as-is. This blog's component classes (`.post`, `.post-hero`, `.nav`, `.footer`)
+are already well-namespaced and won't conflict.
 
 ### Preview Workflow
 
@@ -230,10 +236,10 @@ Follow these phases **in order**.
 
 Run tier detection (Tier 1 → 2 → 3). Verify push permission.
 
-If all tiers fail, ask the user for one of:
-- `GITHUB_TOKEN` env var (Tier 3)
-- Git + GitHub auth (Tier 1/2)
-- Local clone path via `AGENT_BLOG_PATH` (Tier 1)
+If all tiers fail:
+- First check if `GITHUB_TOKEN` or `GH_TOKEN` is set → Tier 3
+- Ask the user to provide a GitHub PAT with `repo` scope if not set
+- NEVER ask the user to install git, Node.js, or pnpm — these are optional, not required
 
 Announce active tier. Do not proceed until access is confirmed.
 
@@ -354,11 +360,12 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
 
 | Scenario | Action |
 |----------|--------|
-| All tiers fail | Ask for `GITHUB_TOKEN`, git auth, or local clone |
-| Permission denied | Check token/user has push access |
+| All tiers fail | Ask for `GITHUB_TOKEN` — do NOT ask for git/Node/pnpm install |
+| Permission denied | Check token has `repo` scope and push access |
 | Filename collision | Append distinguishing word |
 | User rejects outline | Iterate, do not write |
 | Edits after preview | Phase 6 → regenerate → Phase 8 |
 | Push fails (conflict) | Pull/rebase (Tier 1/2) or get latest SHA (Tier 3) |
 | Source file read fails | Preview may be degraded — warn user and proceed |
 | API rate limit | Wait/retry, or help set up Tier 1/2 |
+| User lacks technical background | Use Tier 3, explain in simple terms, never require installs |
