@@ -1,6 +1,6 @@
 ---
 name: blog-publish
-version: 1.6.0
+version: 1.7.0
 description: |
   Generate and publish blog posts from any project to kelegele/agent-blog.
   ZERO DEPENDENCIES — does NOT require Node.js, pnpm, git, or any local build tools.
@@ -38,6 +38,29 @@ Turn any project or idea into a polished blog post and publish it to
 | Images dir | `public/blog/{categorySlug}/` |
 | Schema | `src/content.config.ts` (source of truth — read it dynamically) |
 | Auto-deploy | Vercel (push to `main` triggers deploy) |
+
+## Article Staging Location
+
+Generated articles are saved to a local file for review before publishing.
+The staging location depends on the active tier:
+
+| Tier | Article staging path |
+|------|---------------------|
+| 1 — Local clone | `{blog-repo}/src/content/blog/{filename}.md` |
+| 2 — Sparse clone | `{BLOG_TMP}/src/content/blog/{filename}.md` |
+| 3 — REST API | `./docs/blog-publish/{filename}.md` (current project directory) |
+
+**Why `./docs/blog-publish/` for Tier 3?** When there's no blog repo clone, the
+article needs a local home for editing and preview. The `docs/` directory is a
+conventional place for documentation in any project. The subdirectory `blog-publish`
+keeps it isolated from the project's own docs. Create it if it doesn't exist:
+
+```bash
+mkdir -p ./docs/blog-publish
+```
+
+After the article is published (pushed to remote via API), this local copy remains
+as a backup. Tell the user they can delete it or keep it.
 
 ---
 
@@ -169,11 +192,11 @@ curl -sf -X PUT -H "Authorization: token $GITHUB_TOKEN" \
 
 ### Tier Summary
 
-| Tier | Requires | Preview | Read | Write |
-|------|----------|:-------:|------|-------|
-| 1 — Local clone | git + local path | ✅ | filesystem | git push |
-| 2 — Sparse clone | git | ✅ | filesystem | git push |
-| 3 — REST API | `GITHUB_TOKEN` + curl + jq | ✅ | API | API |
+| Tier | Requires | Preview | Read | Write | Article staging |
+|------|----------|:-------:|------|-------|-----------------|
+| 1 — Local clone | git + local path | ✅ | filesystem | git push | `{blog-repo}/src/content/blog/` |
+| 2 — Sparse clone | git | ✅ | filesystem | git push | `{BLOG_TMP}/src/content/blog/` |
+| 3 — REST API | `GITHUB_TOKEN` + curl + jq | ✅ | API | API | `./docs/blog-publish/` |
 
 Always try Tier 1 → 2 → 3. Announce active tier at startup.
 
@@ -270,7 +293,7 @@ If all tiers fail:
 - Ask the user to provide a GitHub PAT with `repo` scope if not set
 - NEVER ask the user to install git, Node.js, or pnpm — these are optional, not required
 
-Announce active tier. Do not proceed until access is confirmed.
+Announce active tier and article staging location. Do not proceed until access is confirmed.
 
 ### Phase 2 — Discover the Angle
 
@@ -321,6 +344,16 @@ grep -rh "^categorySlug:" {blog-repo}/src/content/blog/*.md | sort -u
 
 Write full Markdown with frontmatter that matches the schema read in Phase 5.
 
+**Save to staging location** (see Article Staging Location table above):
+
+- **Tier 1/2:** Write to `{blog-repo}/src/content/blog/{filename}.md` (or `{BLOG_TMP}/...`)
+- **Tier 3:** Write to `./docs/blog-publish/{filename}.md`
+
+```bash
+# Tier 3 staging
+mkdir -p ./docs/blog-publish
+```
+
 Rules:
 - `date`: today, `YYYY-MM-DD`
 - `draft`: ALWAYS `true` at this stage
@@ -328,10 +361,12 @@ Rules:
 - 800+ words, proper Markdown, include code/image placeholders
 - Filename: kebab-case, no collisions
 
+Tell the user where the article was saved: "Article saved to `{staging_path}`"
+
 ### Phase 7 — Handle Images
 
 - **Tier 1/2:** Copy to `{blog-repo}/public/blog/{categorySlug}/`
-- **Tier 3:** Note paths, upload via API in Phase 11
+- **Tier 3:** Copy to `./docs/blog-publish/{categorySlug}/` for local reference, upload via API in Phase 11
 - Path: `![Alt](/blog/{categorySlug}/image-name.webp)`
 
 ### Phase 8 — Validate Article Format
@@ -427,11 +462,11 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
    rm -rf "$BLOG_TMP"
    ```
 
-4. **Tier 3:** Use "Update file" + "Upload image" API calls.
+4. **Tier 3:** Use "Create file" API to push `./docs/blog-publish/{filename}.md` to remote.
+   Also upload any images via "Upload image" API call.
 
 5. **Verify deployment** (optional but recommended):
    ```bash
-   # Wait a few seconds, then check Vercel deployment
    curl -sf "https://agent-blog-kelegele.vercel.app/blog/{slug}" -o /dev/null -w "%{http_code}"
    # 200 = deployed successfully
    ```
@@ -439,6 +474,8 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
 6. Confirm: "Pushed to `main`. Vercel will auto-deploy. Live URL: https://agent-blog-kelegele.vercel.app/blog/{slug}"
 
 7. Cleanup: `rm -f "$PREVIEW_FILE"`
+   Tier 3 note: `./docs/blog-publish/{filename}.md` is kept as local backup.
+   Tell the user: "Local copy at `./docs/blog-publish/{filename}.md` — you can delete it or keep it."
 
 **Commit message:** `post: publish {title}`
 
@@ -461,6 +498,8 @@ Read the article file from the repo (filesystem or API).
 
 Ask the user what to change. Apply edits to the Markdown content.
 Do NOT change `draft` status — keep whatever it currently is.
+
+For Tier 3, save the edited version to `./docs/blog-publish/{filename}.md`.
 
 ### E-Phase 4 — Re-validate (Phase 8 from new article workflow)
 
@@ -490,4 +529,5 @@ Commit and push with message: `post: update {title}`
 | Source file read fails | Preview may be degraded — warn user and proceed |
 | API rate limit | Wait/retry, or help set up Tier 1/2 |
 | User lacks technical background | Use Tier 3, explain in simple terms, never require installs |
-| Deployment verification fails | This is non-blocking — Vercel may take 30–60s to deploy |
+| Deployment verification fails | Non-blocking — Vercel may take 30–60s to deploy |
+| `./docs/blog-publish/` already has files | Inform user, ask if they want to overwrite or use a different name |
