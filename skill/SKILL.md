@@ -1,13 +1,14 @@
 ---
 name: blog-publish
-version: 1.5.0
+version: 1.6.0
 description: |
   Generate and publish blog posts from any project to kelegele/agent-blog.
   ZERO DEPENDENCIES — does NOT require Node.js, pnpm, git, or any local build tools.
   Works with only a browser and a GitHub token. Triggers on:
   "写篇博客", "blog this", "发博文", "publish blog", "把项目写成文章", "写篇文章",
   "blog it", "post article", "新文章", "new blog post", "blog this project",
-  "发一篇博文", "写一篇博文", "blog post about this".
+  "发一篇博文", "写一篇博文", "blog post about this", "edit blog post",
+  "修改文章", "更新博文", "edit article".
   Collects project context, collaborates on outline, writes Markdown with correct
   frontmatter, validates article format, generates a standalone HTML preview by
   reading live blog source, manages draft/review/publish flow. Pushes to
@@ -25,7 +26,7 @@ description: |
 > are NOT required.
 
 Turn any project or idea into a polished blog post and publish it to
-`kelegele/agent-blog`.
+`kelegele/agent-blog`. Also supports editing existing posts.
 
 ## Blog Repo Reference
 
@@ -35,7 +36,31 @@ Turn any project or idea into a polished blog post and publish it to
 | Branch | `main` |
 | Posts dir | `src/content/blog/` |
 | Images dir | `public/blog/{categorySlug}/` |
+| Schema | `src/content.config.ts` (source of truth — read it dynamically) |
 | Auto-deploy | Vercel (push to `main` triggers deploy) |
+
+---
+
+## Schema — Read Dynamically, Never Hardcode
+
+The blog's frontmatter schema is defined in `src/content.config.ts`. **Read this
+file at runtime** to get the current schema — do not rely on the snapshot below.
+
+**File location:** `src/content.config.ts`
+
+Known schema as of this writing (may change — always verify):
+
+| Field | Type | Required | Default |
+|-------|------|:--------:|---------|
+| `title` | `string` | ✅ | — |
+| `description` | `string` | ✅ | — |
+| `date` | `Date` (coerced) | ✅ | — |
+| `category` | `string` | ✅ | — |
+| `categorySlug` | `string` | optional | — |
+| `draft` | `boolean` | optional | `false` |
+
+If the schema changes in the future (e.g. a `tags` field is added), the agent
+will pick it up automatically by reading this file.
 
 ---
 
@@ -197,13 +222,17 @@ Read these files from the blog repo (via filesystem for Tier 1/2, via API for Ti
    understanding — headings → `<h2>`/`<h3>`, code blocks → `<pre><code>`,
    images → `<img>`, links → `<a>`, etc.
 
-6. **Save and open:**
+6. **Save and open** (detect platform automatically):
    ```bash
    PREVIEW_FILE=$(mktemp --suffix=.html)
    # Write assembled HTML to $PREVIEW_FILE
-   open "$PREVIEW_FILE"          # macOS
-   xdg-open "$PREVIEW_FILE"      # Linux
-   start "$PREVIEW_FILE"         # Windows
+   # Open in browser:
+   case "$(uname -s)" in
+     Darwin)  open "$PREVIEW_FILE" ;;
+     Linux)   xdg-open "$PREVIEW_FILE" ;;
+     MINGW*|MSYS*|CYGWIN*) start "$PREVIEW_FILE" ;;
+     *)       echo "Preview saved to: $PREVIEW_FILE" ;;
+   esac
    ```
 
 ### Scoped Style Handling
@@ -228,7 +257,7 @@ rm -f "$PREVIEW_FILE"
 
 ---
 
-## Workflow
+## Workflow — New Article
 
 Follow these phases **in order**.
 
@@ -271,7 +300,11 @@ If not a code repo, ask for key points directly. Silently absorb context.
 Generate: title, section headings (3–7), summary per section, category, filename.
 Present to user. Iterate until approved.
 
-### Phase 5 — Read Existing Categories
+### Phase 5 — Read Existing Categories & Schema
+
+**Read schema** from `src/content.config.ts` to get the current frontmatter fields.
+
+**Read categories** by scanning frontmatter from all posts:
 
 **Tier 1/2:**
 ```bash
@@ -281,23 +314,12 @@ grep -rh "^categorySlug:" {blog-repo}/src/content/blog/*.md | sort -u
 
 **Tier 3:** Use "List posts" + "Read file" API calls to scan frontmatter.
 
-**Rules:** Prefer existing categories. New allowed — confirm first.
+**Category rules:** Prefer existing categories. New allowed — confirm first.
 `category` = display label, `categorySlug` = URL-safe slug.
 
 ### Phase 6 — Write the Article
 
-Write full Markdown with frontmatter:
-
-```yaml
----
-title: "Post Title"
-description: "1–2 sentence description."
-date: YYYY-MM-DD
-category: "Label"
-categorySlug: "slug"
-draft: true
----
-```
+Write full Markdown with frontmatter that matches the schema read in Phase 5.
 
 Rules:
 - `date`: today, `YYYY-MM-DD`
@@ -323,39 +345,44 @@ This acts as a mini CI gate — all checks must pass before proceeding to previe
 
 Run every check below. Fix issues inline if possible, then report results.
 
-**Frontmatter (all REQUIRED — block if missing):**
+**Frontmatter structure (block if invalid):**
 
 | # | Check | Rule | Auto-fix? |
 |---|-------|------|:---------:|
-| 1 | `title` present | Non-empty string | ❌ Block |
-| 2 | `description` present | Non-empty string, 1–3 sentences | ❌ Block |
-| 3 | `date` present & valid | `YYYY-MM-DD` format, must be a real date | ✅ Default to today |
-| 4 | `category` present | Non-empty string | ❌ Block |
-| 5 | `categorySlug` present | Non-empty, lowercase, hyphenated | ✅ Derive from `category` |
-| 6 | `draft` is `true` | Must be boolean `true` at this stage | ✅ Set to `true` |
-| 7 | No extra fields | Only the 6 fields above allowed in frontmatter | ✅ Remove extras |
+| 1 | `---` fences | File starts with `---` on line 1, closing `---` present | ✅ Add fences |
+| 2 | YAML parseable | Content between fences is valid YAML | ❌ Block |
+| 3 | No extra fields | Only fields defined in `src/content.config.ts` schema | ✅ Remove extras |
+
+**Frontmatter fields (block if missing required, auto-fix optional):**
+
+| # | Check | Rule | Auto-fix? |
+|---|-------|------|:---------:|
+| 4 | `title` present | Non-empty string | ❌ Block |
+| 5 | `description` present | Non-empty string, 1–3 sentences | ❌ Block |
+| 6 | `date` present & valid | `YYYY-MM-DD` format, must be a real date | ✅ Default to today |
+| 7 | `category` present | Non-empty string | ❌ Block |
+| 8 | `categorySlug` present | Non-empty, lowercase, hyphenated | ✅ Derive from `category` |
+| 9 | `draft` is `true` | Must be boolean `true` at this stage | ✅ Set to `true` |
 
 **Content quality (WARN — non-blocking but fix if possible):**
 
 | # | Check | Rule | Auto-fix? |
 |---|-------|------|:---------:|
-| 8 | Body length | ≥ 400 words (warn if < 800, allow user override) | ❌ Warn |
-| 9 | Headings | At least one `##` heading in body | ❌ Warn |
-| 10 | Unclosed code blocks | Every opening ``` has a closing ``` | ✅ Close them |
-| 11 | Empty sections | No heading followed by zero content before next heading | ❌ Warn |
-| 12 | Image paths | All `![]()` paths start with `/blog/` (absolute) or are external URLs | ✅ Fix paths |
+| 10 | Body length | ≥ 400 words (warn if < 800, allow user override) | ❌ Warn |
+| 11 | Headings | At least one `##` heading in body | ❌ Warn |
+| 12 | Unclosed code blocks | Every opening ``` has a closing ``` | ✅ Close them |
+| 13 | Empty sections | No heading followed by zero content before next heading | ❌ Warn |
+| 14 | Image paths | All `![]()` paths start with `/blog/` or are external URLs | ✅ Fix paths |
 
 **Filename (block if invalid):**
 
 | # | Check | Rule | Auto-fix? |
 |---|-------|------|:---------:|
-| 13 | kebab-case | Only `a-z0-9-`, no spaces, underscores, or uppercase | ✅ Convert |
-| 14 | No collision | Filename doesn't already exist in `src/content/blog/` | ✅ Append suffix |
-| 15 | `.md` extension | Filename ends with `.md` | ✅ Append |
+| 15 | kebab-case | Only `a-z0-9-`, no spaces, underscores, or uppercase | ✅ Convert |
+| 16 | No collision | Filename doesn't already exist in `src/content/blog/` | ✅ Append suffix |
+| 17 | `.md` extension | Filename ends with `.md` | ✅ Append |
 
 **Reporting format:**
-
-After running all checks, report to the user:
 
 ```
 ✅ Format validation passed (or)
@@ -402,11 +429,50 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
 
 4. **Tier 3:** Use "Update file" + "Upload image" API calls.
 
-5. Confirm: "Pushed to `main`. Vercel will auto-deploy."
+5. **Verify deployment** (optional but recommended):
+   ```bash
+   # Wait a few seconds, then check Vercel deployment
+   curl -sf "https://agent-blog-kelegele.vercel.app/blog/{slug}" -o /dev/null -w "%{http_code}"
+   # 200 = deployed successfully
+   ```
 
-6. Cleanup: `rm -f "$PREVIEW_FILE"`
+6. Confirm: "Pushed to `main`. Vercel will auto-deploy. Live URL: https://agent-blog-kelegele.vercel.app/blog/{slug}"
+
+7. Cleanup: `rm -f "$PREVIEW_FILE"`
 
 **Commit message:** `post: publish {title}`
+
+---
+
+## Workflow — Edit Existing Article
+
+When the user wants to edit an existing post (trigger: "edit article", "修改文章",
+"update blog post", etc.):
+
+### E-Phase 1 — Find the Article
+
+List existing posts and ask which one to edit. Or accept a slug/filename from the user.
+
+### E-Phase 2 — Read Current Content
+
+Read the article file from the repo (filesystem or API).
+
+### E-Phase 3 — Apply Edits
+
+Ask the user what to change. Apply edits to the Markdown content.
+Do NOT change `draft` status — keep whatever it currently is.
+
+### E-Phase 4 — Re-validate (Phase 8 from new article workflow)
+
+Run the same validation checklist. Fix issues, report results.
+
+### E-Phase 5 — Preview
+
+Generate preview from live source. Open in browser. Iterate until approved.
+
+### E-Phase 6 — Push
+
+Commit and push with message: `post: update {title}`
 
 ---
 
@@ -424,3 +490,4 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
 | Source file read fails | Preview may be degraded — warn user and proceed |
 | API rate limit | Wait/retry, or help set up Tier 1/2 |
 | User lacks technical background | Use Tier 3, explain in simple terms, never require installs |
+| Deployment verification fails | This is non-blocking — Vercel may take 30–60s to deploy |
