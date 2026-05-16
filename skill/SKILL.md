@@ -1,6 +1,6 @@
 ---
 name: blog-publish
-version: 1.4.1
+version: 1.5.0
 description: |
   Generate and publish blog posts from any project to kelegele/agent-blog.
   ZERO DEPENDENCIES — does NOT require Node.js, pnpm, git, or any local build tools.
@@ -9,10 +9,10 @@ description: |
   "blog it", "post article", "新文章", "new blog post", "blog this project",
   "发一篇博文", "写一篇博文", "blog post about this".
   Collects project context, collaborates on outline, writes Markdown with correct
-  frontmatter, generates a standalone HTML preview by reading live blog source,
-  manages draft/review/publish flow. Pushes to kelegele/agent-blog main branch.
-  Vercel auto-deploys on push. Use this skill whenever the user expresses intent
-  to write about their current work as a blog post.
+  frontmatter, validates article format, generates a standalone HTML preview by
+  reading live blog source, manages draft/review/publish flow. Pushes to
+  kelegele/agent-blog main branch. Vercel auto-deploys on push. Use this skill
+  whenever the user expresses intent to write about their current work as a blog post.
 ---
 
 # blog-publish — Generate & Publish Blog Posts
@@ -309,23 +309,77 @@ Rules:
 ### Phase 7 — Handle Images
 
 - **Tier 1/2:** Copy to `{blog-repo}/public/blog/{categorySlug}/`
-- **Tier 3:** Note paths, upload via API in Phase 10
+- **Tier 3:** Note paths, upload via API in Phase 11
 - Path: `![Alt](/blog/{categorySlug}/image-name.webp)`
 
-### Phase 8 — Generate Preview from Live Source
+### Phase 8 — Validate Article Format
+
+Before generating the preview, run a **format validation check** on the article.
+This acts as a mini CI gate — all checks must pass before proceeding to preview.
+
+**Auto-fix what you can, then report what you fixed. Block on critical errors.**
+
+#### Validation Checklist
+
+Run every check below. Fix issues inline if possible, then report results.
+
+**Frontmatter (all REQUIRED — block if missing):**
+
+| # | Check | Rule | Auto-fix? |
+|---|-------|------|:---------:|
+| 1 | `title` present | Non-empty string | ❌ Block |
+| 2 | `description` present | Non-empty string, 1–3 sentences | ❌ Block |
+| 3 | `date` present & valid | `YYYY-MM-DD` format, must be a real date | ✅ Default to today |
+| 4 | `category` present | Non-empty string | ❌ Block |
+| 5 | `categorySlug` present | Non-empty, lowercase, hyphenated | ✅ Derive from `category` |
+| 6 | `draft` is `true` | Must be boolean `true` at this stage | ✅ Set to `true` |
+| 7 | No extra fields | Only the 6 fields above allowed in frontmatter | ✅ Remove extras |
+
+**Content quality (WARN — non-blocking but fix if possible):**
+
+| # | Check | Rule | Auto-fix? |
+|---|-------|------|:---------:|
+| 8 | Body length | ≥ 400 words (warn if < 800, allow user override) | ❌ Warn |
+| 9 | Headings | At least one `##` heading in body | ❌ Warn |
+| 10 | Unclosed code blocks | Every opening ``` has a closing ``` | ✅ Close them |
+| 11 | Empty sections | No heading followed by zero content before next heading | ❌ Warn |
+| 12 | Image paths | All `![]()` paths start with `/blog/` (absolute) or are external URLs | ✅ Fix paths |
+
+**Filename (block if invalid):**
+
+| # | Check | Rule | Auto-fix? |
+|---|-------|------|:---------:|
+| 13 | kebab-case | Only `a-z0-9-`, no spaces, underscores, or uppercase | ✅ Convert |
+| 14 | No collision | Filename doesn't already exist in `src/content/blog/` | ✅ Append suffix |
+| 15 | `.md` extension | Filename ends with `.md` | ✅ Append |
+
+**Reporting format:**
+
+After running all checks, report to the user:
+
+```
+✅ Format validation passed (or)
+⚠️ Format validation: {N} issues found and auto-fixed (list them)
+🚫 Format validation: {N} critical issues require attention (list them)
+```
+
+**If any BLOCK-level check cannot be auto-fixed, stop and ask the user for input.**
+Do not proceed to Phase 9 (preview) until all blockers are resolved.
+
+### Phase 9 — Generate Preview from Live Source
 
 Read the 5 source files listed in the Preview section. Assemble standalone HTML.
 Convert Markdown body to HTML. Save and open in browser.
 
-Wait for user feedback. If edits → Phase 6 → regenerate → Phase 8.
+Wait for user feedback. If edits → Phase 6 → Phase 8 (re-validate) → Phase 9.
 
-### Phase 9 — User Final Approval
+### Phase 10 — User Final Approval
 
 Ask: "Ready to publish?" Wait for explicit confirmation.
 
 **Do NOT proceed until user says yes.**
 
-### Phase 10 — Publish
+### Phase 11 — Publish
 
 1. Change `draft: true` → `draft: false`
 
@@ -364,7 +418,8 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
 | Permission denied | Check token has `repo` scope and push access |
 | Filename collision | Append distinguishing word |
 | User rejects outline | Iterate, do not write |
-| Edits after preview | Phase 6 → regenerate → Phase 8 |
+| Validation blockers | Fix auto-fixable issues, ask user for the rest |
+| Edits after preview | Phase 6 → Phase 8 (re-validate) → Phase 9 |
 | Push fails (conflict) | Pull/rebase (Tier 1/2) or get latest SHA (Tier 3) |
 | Source file read fails | Preview may be degraded — warn user and proceed |
 | API rate limit | Wait/retry, or help set up Tier 1/2 |
