@@ -14,7 +14,15 @@ const categoryMap = Object.fromEntries(
 
 <BaseLayout>
   <section class="hero">
-    <h1 class="hero-title">可了个乐</h1>
+    <h1 class="hero-title hero-ascii" aria-label="可了个乐">
+      <pre aria-hidden="true">██    ██ ████████ ██       ████████  ██████  ████████ ██       ████████
+██   ██  ██       ██       ██       ██    ██ ██       ██       ██
+██  ██   ██       ██       ██       ██       ██       ██       ██
+█████    ██████   ██       ██████   ██  ████ ██████   ██       ██████
+██  ██   ██       ██       ██       ██    ██ ██       ██       ██
+██   ██  ██       ██       ██       ██    ██ ██       ██       ██
+██    ██ ████████ ████████ ████████  ██████  ████████ ████████ ████████</pre>
+    </h1>
     <p class="hero-subtitle">AI × Creativity</p>
     <p class="hero-desc">用 AI 探索创造的无限可能</p>
   </section>
@@ -61,6 +69,28 @@ const categoryMap = Object.fromEntries(
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .hero-ascii {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .hero-ascii::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero-ascii pre {
+    display: inline-block;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(6px, 0.95vw, 12px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: 0;
+    white-space: pre;
+    color: inherit;
   }
 
   .hero-subtitle {
@@ -131,6 +161,12 @@ const categoryMap = Object.fromEntries(
       font-size: 40px;
       letter-spacing: -1.6px;
       line-height: 48px;
+    }
+
+    .hero-ascii pre {
+      font-size: 5px;
+      line-height: 1.08;
+      letter-spacing: 0;
     }
 
     .hero-subtitle {
