@@ -1,6 +1,11 @@
+﻿---
 ---
----
-<button id="theme-toggle" aria-label="切换深色模式">
+<button id="theme-toggle" aria-label="切换主题">
+  <svg class="icon-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="6" width="20" height="12" rx="2"/>
+    <circle cx="17" cy="12" r="2" fill="currentColor" stroke="none"/>
+    <line x1="6" y1="12" x2="10" y2="12"/>
+  </svg>
   <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
   </svg>
@@ -27,29 +32,49 @@
     background: var(--c-canvas-soft);
   }
 
+  .icon-sun,
   .icon-moon {
     display: none;
   }
 </style>
 
 <script>
-  const toggle = document.getElementById('theme-toggle');
-  const sun = toggle?.querySelector('.icon-sun') as SVGSVGElement;
-  const moon = toggle?.querySelector('.icon-moon') as SVGSVGElement;
+  type Theme = 'auto' | 'light' | 'dark';
 
-  function applyTheme(dark: boolean) {
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-    sun!.style.display = dark ? 'none' : 'block';
-    moon!.style.display = dark ? 'block' : 'none';
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  const toggle = document.getElementById('theme-toggle');
+  const icons = {
+    auto: toggle?.querySelector('.icon-auto') as SVGSVGElement,
+    light: toggle?.querySelector('.icon-sun') as SVGSVGElement,
+    dark: toggle?.querySelector('.icon-moon') as SVGSVGElement,
+  };
+
+  function showIcon(theme: Theme) {
+    (Object.entries(icons) as [Theme, SVGSVGElement][]).forEach(([key, el]) => {
+      if (el) el.style.display = key === theme ? 'block' : 'none';
+    });
   }
 
-  const saved = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  applyTheme(saved ? saved === 'dark' : prefersDark);
+  function applyTheme(theme: Theme) {
+    const root = document.documentElement;
+    if (theme === 'auto') {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', theme);
+    }
+    showIcon(theme);
+    localStorage.setItem('theme', theme);
+  }
+
+  // Cycle: auto → light → dark → auto
+  const cycle: Theme[] = ['auto', 'light', 'dark'];
 
   toggle?.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    applyTheme(!isDark);
+    const current = localStorage.getItem('theme') as Theme || 'auto';
+    const next = cycle[(cycle.indexOf(current) + 1) % cycle.length];
+    applyTheme(next);
   });
+
+  // Sync icon with saved theme on page load
+  const saved = (localStorage.getItem('theme') as Theme) || 'auto';
+  showIcon(saved);
 </script>

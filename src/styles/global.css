@@ -111,6 +111,36 @@
   --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.3), 0 24px 48px rgba(0, 0, 0, 0.5);
 }
 
+
+/* Auto dark: match system preference when no explicit theme is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --c-primary: #ededed;
+    --c-on-primary: #0a0a0a;
+    --c-ink: #ededed;
+    --c-body: #a1a1a1;
+    --c-mute: #666666;
+    --c-hairline: #262626;
+    --c-hairline-strong: #404040;
+    --c-canvas: #0a0a0a;
+    --c-canvas-soft: #111111;
+    --c-canvas-soft-2: #1a1a1a;
+
+    --c-link: #3291ff;
+    --c-link-deep: #79b8ff;
+    --c-link-bg-soft: rgba(50, 145, 255, 0.15);
+
+    --c-selection-bg: #ededed;
+    --c-selection-fg: #0a0a0a;
+
+    --c-violet-soft: rgba(121, 40, 202, 0.2);
+    --c-cyan-soft: rgba(80, 227, 194, 0.15);
+
+    --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 2px 4px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 4px 8px rgba(0, 0, 0, 0.2), 0 16px 48px rgba(0, 0, 0, 0.4);
+    --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.3), 0 24px 48px rgba(0, 0, 0, 0.5);
+  }
+}
 /* ── Reset ──────────────────────────────────────────────── */
 *,
 *::before,
@@ -153,3 +183,4 @@ a {
 a:hover {
   color: var(--c-link-deep);
 }
+

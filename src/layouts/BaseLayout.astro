@@ -1,4 +1,4 @@
----
+﻿---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -25,8 +25,10 @@ const { title = '可了个乐 — AI × Creativity', description = '用 AI 探�
     <link href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.min.css" rel="stylesheet" />
     <title>{title}</title>
     <script is:inline>
-      const s=localStorage.getItem('theme'),d=s?s==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
-      document.documentElement.setAttribute('data-theme',d?'dark':'light');
+      const t=localStorage.getItem('theme');
+      if(t==='light')document.documentElement.setAttribute('data-theme','light');
+      else if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+      // auto: no data-theme attr, CSS media query handles it
     </script>
   </head>
   <body>
@@ -38,3 +40,4 @@ const { title = '可了个乐 — AI × Creativity', description = '用 AI 探�
     <Analytics />
   </body>
 </html>
+

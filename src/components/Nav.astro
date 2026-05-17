@@ -57,6 +57,12 @@ const currentPath = Astro.url.pathname;
     content: url('/logo.png');
   }
 
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .nav-logo {
+      content: url('/logo.png');
+    }
+  }
+
   .nav-name {
     font-size: 14px;
     font-weight: 600;
