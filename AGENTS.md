@@ -59,6 +59,9 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 - Use concise, descriptive commit messages (English or Chinese are both acceptable).
 - Keep PRs focused on a single concern.
 - Run `pnpm build` before submitting to verify no build errors.
+- **Remote `main` auto-publishes the site.** Do not push to `origin/main` unless the user has explicitly confirmed they have locally experienced and approved the current result, or they explicitly asks to push after that approval context is clear.
+- Local commits are acceptable when requested, but pushing requires a fresh verification step because it triggers deployment.
+- When summarizing lessons learned for this repository, also harden durable workflow lessons into AGENTS guidance and memory instead of only replying in chat.
 
 ## UI/UX Design Rules
 
