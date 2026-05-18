@@ -17,6 +17,9 @@ const hasOpen = Boolean(creation.openUrl);
 const hasRead = Boolean(creation.readUrl);
 const isExternalOpen = creation.openUrl?.startsWith('http');
 const isExternalRead = creation.readUrl?.startsWith('http');
+const visualKeyword = creation.visual?.kind === 'placeholder'
+  ? creation.visual.label ?? creation.tags[0] ?? creation.title
+  : creation.tags[0] ?? creation.title;
 ---
 
 <article class="creation-card" data-status={creation.status}>
@@ -24,7 +27,7 @@ const isExternalRead = creation.readUrl?.startsWith('http');
     {creation.visual?.kind === 'image' ? (
       <img src={creation.visual.src} alt={creation.visual.alt} loading="lazy" />
     ) : (
-      <span>{creation.visual?.label ?? 'Creation'}</span>
+      <span>{visualKeyword}</span>
     )}
   </div>
 
@@ -89,6 +92,7 @@ const isExternalRead = creation.readUrl?.startsWith('http');
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     aspect-ratio: 16 / 9;
     border-bottom: 1px solid var(--c-hairline);
     background: var(--c-canvas-soft);
@@ -99,8 +103,55 @@ const isExternalRead = creation.readUrl?.startsWith('http');
   }
 
   .creation-visual.is-placeholder {
-    background: var(--c-canvas-soft-2);
+    overflow: hidden;
+    background:
+      linear-gradient(135deg, var(--c-canvas-soft), var(--c-link-bg-soft) 48%, var(--c-violet-soft)),
+      var(--c-canvas-soft-2);
     color: var(--c-ink);
+  }
+
+  .creation-visual.is-placeholder::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background-image:
+      linear-gradient(var(--c-hairline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--c-hairline) 1px, transparent 1px);
+    background-size: 12px 12px;
+    opacity: 0.38;
+  }
+
+  .creation-visual.is-placeholder span {
+    position: relative;
+    z-index: 1;
+    width: min(88%, 440px);
+    color: var(--c-ink);
+    font-family: var(--font-mono);
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.72;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    text-wrap: balance;
+    word-break: break-word;
+    image-rendering: pixelated;
+    filter: contrast(1.08);
+    text-shadow:
+      3px 0 0 var(--c-canvas),
+      0 3px 0 var(--c-canvas),
+      3px 3px 0 var(--c-canvas),
+      6px 6px 0 var(--c-hairline-strong);
+  }
+
+  @supports (font-size: 1cqw) {
+    .creation-visual.is-placeholder {
+      container-type: inline-size;
+    }
+
+    .creation-visual.is-placeholder span {
+      font-size: clamp(52px, 17cqw, 96px);
+    }
   }
 
   .creation-visual img {

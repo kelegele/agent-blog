@@ -10,7 +10,7 @@ export type CreationVisual =
     }
   | {
       kind: 'placeholder';
-      label: string;
+      label?: string;
     };
 
 export type Creation = {
@@ -51,19 +51,7 @@ export const creations: Creation[] = [
     readUrl: '/blog/ai-agent-coding',
   },
   {
-    title: 'Minecraft nOWorld',
-    description: '一个曾经存在的小型 Minecraft 服务器，围绕原版生存、社区协作和长期世界展开。',
-    status: 'Demo',
-    tags: ['Minecraft', 'Server', 'Community'],
-    visual: {
-      kind: 'image',
-      src: '/blog/geek/mc.webp',
-      alt: 'Minecraft 世界截图',
-    },
-    readUrl: '/blog/minecraft-noworld',
-  },
-  {
-    title: 'Skill craft lessons',
+    title: 'Skill Craft 实践',
     description: '从零依赖发布博客的 Skill 实践中，总结 Agent 工作流如何降低环境门槛。',
     status: 'Thoughts',
     tags: ['Agent Skill', 'Workflow', 'Writing'],

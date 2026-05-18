@@ -13,6 +13,16 @@ const filterItems = [
 ---
 
 <BaseLayout title="Creations — 可了个乐" description="AI experiments, tools, demos, and thoughts I have built or explored.">
+  <script slot="head" is:inline>
+    {
+      const allowedStatuses = new Set(['Live', 'Demo', 'Thoughts']);
+      const selectedStatus = new URLSearchParams(window.location.search).get('status');
+      if (selectedStatus && allowedStatuses.has(selectedStatus)) {
+        document.documentElement.dataset.creationStatus = selectedStatus;
+      }
+    }
+  </script>
+
   <section class="creations-hero">
     <div class="creations-hero-inner">
       <p class="eyebrow">AI × Creativity</p>
@@ -210,5 +220,13 @@ const filterItems = [
       font-size: 16px;
       line-height: 24px;
     }
+  }
+</style>
+
+<style is:global>
+  html[data-creation-status="Live"] .creation-card:not([data-status="Live"]),
+  html[data-creation-status="Demo"] .creation-card:not([data-status="Demo"]),
+  html[data-creation-status="Thoughts"] .creation-card:not([data-status="Thoughts"]) {
+    display: none;
   }
 </style>
