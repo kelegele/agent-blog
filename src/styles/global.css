@@ -16,6 +16,9 @@
   --c-canvas: #ffffff;
   --c-canvas-soft: #fafafa;
   --c-canvas-soft-2: #f5f5f5;
+  --c-nav-glass: rgba(255, 255, 255, 0.54);
+  --c-nav-glass-hover: rgba(245, 245, 245, 0.62);
+  --c-nav-glass-edge: rgba(0, 0, 0, 0.08);
 
   /* Link */
   --c-link: #0070f3;
@@ -95,6 +98,9 @@
   --c-canvas: #0a0a0a;
   --c-canvas-soft: #111111;
   --c-canvas-soft-2: #1a1a1a;
+  --c-nav-glass: rgba(10, 10, 10, 0.58);
+  --c-nav-glass-hover: rgba(255, 255, 255, 0.08);
+  --c-nav-glass-edge: rgba(255, 255, 255, 0.12);
 
   --c-link: #3291ff;
   --c-link-deep: #79b8ff;
@@ -125,6 +131,9 @@
     --c-canvas: #0a0a0a;
     --c-canvas-soft: #111111;
     --c-canvas-soft-2: #1a1a1a;
+    --c-nav-glass: rgba(10, 10, 10, 0.58);
+    --c-nav-glass-hover: rgba(255, 255, 255, 0.08);
+    --c-nav-glass-edge: rgba(255, 255, 255, 0.12);
 
     --c-link: #3291ff;
     --c-link-deep: #79b8ff;
@@ -183,4 +192,3 @@ a {
 a:hover {
   color: var(--c-link-deep);
 }
-

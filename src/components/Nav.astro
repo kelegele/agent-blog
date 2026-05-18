@@ -28,10 +28,10 @@ const isCreationsPath = currentPath === '/creations' || currentPath === '/creati
     height: var(--nav-height);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--c-hairline);
-    background: var(--c-canvas);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--c-nav-glass-edge);
+    background: var(--c-nav-glass);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
   }
 
   .nav-inner {
@@ -83,8 +83,8 @@ const isCreationsPath = currentPath === '/creations' || currentPath === '/creati
     align-items: center;
     gap: 3px;
     font-size: 14px;
-    font-weight: 400;
-    color: var(--c-mute);
+    font-weight: 500;
+    color: var(--c-body);
     padding: 6px 12px;
     border-radius: var(--r-full);
     transition: color 0.15s, background 0.15s;
@@ -92,12 +92,12 @@ const isCreationsPath = currentPath === '/creations' || currentPath === '/creati
   }
 
   .nav-links a svg {
-    opacity: 0.5;
+    opacity: 0.75;
   }
 
   .nav-links a:hover {
     color: var(--c-ink);
-    background: var(--c-canvas-soft);
+    background: var(--c-nav-glass-hover);
   }
 
   .nav-links a.active {
