@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Oh-My-PM five-layer product workflow loop</title>
+  <desc id="desc">A five-layer product management workflow from perception to strategy, design, delivery, validation, and back to perception.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.13"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="600" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="34" font-weight="700" fill="#0f172a">Oh-My-PM 五层闭环</text>
+  <text x="600" y="112" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="18" fill="#475569">需求感知 → 策略规划 → 方案设计 → 交付协调 → 价值验证 → 下一轮需求</text>
+
+  <path d="M 262 222 C 392 148, 808 148, 938 222" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 976 266 C 1052 368, 1052 432, 976 534" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 938 578 C 808 652, 392 652, 262 578" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 224 534 C 148 432, 148 368, 224 266" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="98" y="176" width="244" height="122" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="220" y="216" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#0f172a">1. 需求感知</text>
+    <text x="220" y="248" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#475569">市场 · 用户 · 竞品 · 数据</text>
+    <text x="220" y="274" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" fill="#64748b">输出 market / persona / competitive</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="478" y="144" width="244" height="122" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="600" y="184" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#0f172a">2. 策略规划</text>
+    <text x="600" y="216" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#475569">定位 · 路线图 · 优先级</text>
+    <text x="600" y="242" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" fill="#64748b">输出 positioning / roadmap</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="858" y="176" width="244" height="122" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="980" y="216" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#0f172a">3. 方案设计</text>
+    <text x="980" y="248" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#475569">PRD · 原型 · 流程优化</text>
+    <text x="980" y="274" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" fill="#64748b">输出 prd / prototypes</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="758" y="516" width="244" height="122" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="880" y="556" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#0f172a">4. 交付协调</text>
+    <text x="880" y="588" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#475569">评审 · 项目 · 发布</text>
+    <text x="880" y="614" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" fill="#64748b">输出 project plan / release notes</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="198" y="516" width="244" height="122" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="320" y="556" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#0f172a">5. 价值验证</text>
+    <text x="320" y="588" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#475569">效果 · 反馈 · 迭代</text>
+    <text x="320" y="614" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" fill="#64748b">回流 iteration plan / feedback</text>
+  </g>
+
+  <g>
+    <rect x="456" y="334" width="288" height="116" rx="20" fill="#0f172a"/>
+    <text x="600" y="376" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#ffffff">context/ 作为接力棒</text>
+    <text x="600" y="410" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#cbd5e1">每一层把中间产物写成文件</text>
+    <text x="600" y="434" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#cbd5e1">下一层读取后继续推进</text>
+  </g>
+</svg>
