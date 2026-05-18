@@ -36,7 +36,7 @@ type Creation = {
   status: CreationStatus;
   tags: string[];
   visual?: {
-    kind: 'gradient' | 'image' | 'placeholder';
+    kind: 'image' | 'placeholder';
     src?: string;
     alt?: string;
   };
@@ -49,7 +49,7 @@ Rules:
 
 - `title`, `description`, `status`, and `tags` are required.
 - `openUrl` and `readUrl` are optional, but every creation should have at least one of them.
-- `visual` is optional. Cards must still look intentional when no image or gradient is provided.
+- `visual` is optional. Cards must still look intentional when no image is provided.
 - External tools, frameworks, libraries, standards, and resources mentioned in related blog posts must still be linked inside those posts per repository rules.
 
 ## Status filtering
@@ -95,7 +95,7 @@ The page uses a restrained portfolio layout:
 Each card has:
 
 - Visual area at the top.
-  - Can be an image, a full-width gradient, or a neutral placeholder.
+  - Can be an image or a neutral placeholder.
   - Must not rely on raw unstyled image output.
 - Title.
 - Status pill.

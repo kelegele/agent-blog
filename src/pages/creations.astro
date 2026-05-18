@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CreationCard from '../components/CreationCard.astro';
+import { creations, creationStatuses } from '../data/creations';
+
+const filterItems = [
+  { label: 'All', href: '/creations' },
+  ...creationStatuses.map((status) => ({
+    label: status,
+    href: `/creations?status=${encodeURIComponent(status)}`,
+  })),
+];
+---
+
+<BaseLayout title="Creations — 可了个乐" description="AI experiments, tools, demos, and thoughts I have built or explored.">
+  <section class="creations-hero">
+    <div class="creations-hero-inner">
+      <p class="eyebrow">AI × Creativity</p>
+      <h1>Creations</h1>
+      <p class="intro">AI experiments, tools, demos, and thoughts I have built or explored.</p>
+
+      <nav class="status-filter" aria-label="Filter creations by status">
+        {filterItems.map((item) => (
+          <a href={item.href} data-status-filter={item.label} class:list={[{ active: item.label === 'All' }]}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <section class="creations-section">
+    <div class="creations-grid">
+      {creations.map((creation) => (
+        <CreationCard creation={creation} />
+      ))}
+    </div>
+
+    <div class="empty-state" hidden>
+      <p>No creations found for this status.</p>
+      <a href="/creations">View all creations</a>
+    </div>
+  </section>
+
+  <script>
+    const allowedStatuses = new Set(['Live', 'Demo', 'Thoughts']);
+    const params = new URLSearchParams(window.location.search);
+    const selectedStatus = params.get('status');
+    const activeStatus = selectedStatus && allowedStatuses.has(selectedStatus) ? selectedStatus : 'All';
+    const filterLinks = document.querySelectorAll<HTMLAnchorElement>('[data-status-filter]');
+    const cards = document.querySelectorAll<HTMLElement>('.creation-card[data-status]');
+    const emptyState = document.querySelector<HTMLElement>('.empty-state');
+
+    let visibleCount = 0;
+
+    filterLinks.forEach((link) => {
+      link.classList.toggle('active', link.dataset.statusFilter === activeStatus);
+    });
+
+    cards.forEach((card) => {
+      const shouldShow = activeStatus === 'All' || card.dataset.status === activeStatus;
+      card.hidden = !shouldShow;
+      if (shouldShow) visibleCount += 1;
+    });
+
+    if (emptyState) {
+      emptyState.hidden = visibleCount > 0;
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .creations-hero {
+    border-bottom: 1px solid var(--c-hairline);
+  }
+
+  .creations-hero-inner,
+  .creations-section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-right: var(--s-lg);
+    padding-left: var(--s-lg);
+  }
+
+  .creations-hero-inner {
+    padding-top: var(--s-5xl);
+    padding-bottom: var(--s-3xl);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--s-sm);
+    color: var(--c-mute);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  h1 {
+    margin-bottom: var(--s-md);
+    color: var(--c-ink);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: -2.4px;
+  }
+
+  .intro {
+    max-width: 620px;
+    color: var(--c-body);
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .status-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-xs);
+    margin-top: var(--s-xl);
+  }
+
+  .status-filter a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    border: 1px solid var(--c-hairline);
+    border-radius: var(--r-pill);
+    padding: 0 var(--s-md);
+    background: var(--c-canvas);
+    color: var(--c-body);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .status-filter a:hover {
+    border-color: var(--c-hairline-strong);
+    color: var(--c-ink);
+  }
+
+  .status-filter a.active {
+    border-color: var(--c-primary);
+    background: var(--c-primary);
+    color: var(--c-on-primary);
+  }
+
+  .creations-section {
+    padding-top: var(--s-3xl);
+    padding-bottom: var(--s-4xl);
+  }
+
+  .creations-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-lg);
+  }
+
+  .empty-state {
+    border: 1px solid var(--c-hairline);
+    border-radius: var(--r-md);
+    padding: var(--s-xl);
+    background: var(--c-canvas-soft);
+    text-align: center;
+  }
+
+  .empty-state p {
+    margin-bottom: var(--s-md);
+    color: var(--c-body);
+  }
+
+  .empty-state a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    border-radius: var(--r-sm);
+    padding: 0 var(--s-md);
+    background: var(--c-primary);
+    color: var(--c-on-primary);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .empty-state a:hover {
+    color: var(--c-on-primary);
+  }
+
+  @media (max-width: 760px) {
+    .creations-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .creations-hero-inner,
+    .creations-section {
+      padding-right: var(--s-md);
+      padding-left: var(--s-md);
+    }
+
+    .creations-hero-inner {
+      padding-top: var(--s-3xl);
+      padding-bottom: var(--s-xl);
+    }
+
+    h1 {
+      font-size: 40px;
+      line-height: 48px;
+      letter-spacing: -1.6px;
+    }
+
+    .intro {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+</style>

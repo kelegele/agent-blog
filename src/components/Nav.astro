@@ -1,6 +1,7 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 const currentPath = Astro.url.pathname;
+const isCreationsPath = currentPath === '/creations' || currentPath === '/creations/';
 ---
 
 <nav>
@@ -11,6 +12,7 @@ const currentPath = Astro.url.pathname;
     </a>
     <div class="nav-links">
       <a href="/" class:list={[{ active: currentPath === '/' }]}>Blog</a>
+      <a href="/creations" class:list={[{ active: isCreationsPath }]}>Creations</a>
       <a href="/about" class:list={[{ active: currentPath === '/about/' }]}>About</a>
       <a href="https://github.com/kelegele" target="_blank" rel="noopener">GitHub<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
       <ThemeToggle />
