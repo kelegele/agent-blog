@@ -4,7 +4,7 @@
 
 ## Site Identity
 
-可了个乐是黄宝生（飞栗）的个人博客，聚焦 AI 与创造力的交叉领域。内容涵盖 AI Agent 开发、产品经理工作流、移动端 LLM 推理、Minecraft、个人创造项目复盘等。
+可了个乐是本站作者（飞栗）的个人博客，聚焦 AI 与创造力的交叉领域。内容涵盖 AI Agent 开发、产品经理工作流、移动端 LLM 推理、Minecraft、个人创造项目复盘等。
 
 ## Primary Links
 
