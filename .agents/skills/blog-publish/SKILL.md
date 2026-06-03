@@ -1,6 +1,6 @@
 ---
 name: blog-publish
-version: 1.7.0
+version: 1.8.0
 description: |
   Generate and publish blog posts from any project to kelegele/agent-blog.
   ZERO DEPENDENCIES — does NOT require Node.js, pnpm, git, or any local build tools.
@@ -10,9 +10,10 @@ description: |
   "发一篇博文", "写一篇博文", "blog post about this", "edit blog post",
   "修改文章", "更新博文", "edit article".
   Collects project context, collaborates on outline, writes Markdown with correct
-  frontmatter, validates article format, generates a standalone HTML preview by
-  reading live blog source, manages draft/review/publish flow. Pushes to
-  kelegele/agent-blog main branch. Vercel auto-deploys on push. Use this skill
+  frontmatter, validates article format, validates GEO-friendly external links,
+  generates a standalone HTML preview by reading live blog source, manages
+  draft/review/publish flow, and keeps llms-full.txt updated after publishing.
+  Pushes to kelegele/agent-blog main branch. Vercel auto-deploys on push. Use this skill
   whenever the user expresses intent to write about their current work as a blog post.
 ---
 
@@ -202,6 +203,79 @@ Always try Tier 1 → 2 → 3. Announce active tier at startup.
 
 ---
 
+## Writing Standards — Cross-Platform & SEO/GEO
+
+Articles published through this skill are likely to be **republished to other
+platforms** (WeChat Official Account, 小红书, 知乎, 掘金, etc.) and will be
+**crawled by search engines and LLM training bots**. Follow these rules.
+
+### Cross-Platform Compatibility
+
+**Goal:** The article should survive copy-paste into any platform's editor with
+minimal formatting loss.
+
+| Rule | Why |
+|------|-----|
+| Use only **standard Markdown** — no HTML tags, no custom shortcodes, no platform-specific syntax | WeChat/小红书 editors strip HTML; plain Markdown renders consistently |
+| Avoid `#` (h1) in body — use `##` and `###` only | `title` in frontmatter is the h1; multiple h1s confuse SEO and readers |
+| Avoid footnotes (`[^1]`) — use inline links instead | Most platforms don't render footnotes |
+| Avoid tables unless essential | Many mobile platforms break table layout; prefer lists |
+| Avoid nested lists > 2 levels deep | Copy-paste often flattens nesting |
+| Don't rely on images for critical information | WeChat/小红书 may compress or reorder images |
+| Every image must have meaningful `alt` text | Accessibility + survives text-only copy + helps SEO |
+| Don't use emoji in headings or frontmatter | Some platforms strip emoji in titles |
+| Keep paragraphs short (3–5 sentences max) | Mobile readability on WeChat/小红书 |
+
+### Platform Safety — Content Restrictions
+
+**The article MUST NOT contain content that would be flagged or blocked on major
+Chinese content platforms (微信、小红书、知乎、掘金).**
+
+When writing for Chinese audiences, avoid:
+
+- Political sensitive terms or references
+- Unsubstantiated claims about companies, products, or individuals
+- Direct URLs to blocked/regulated sites (use descriptive text instead)
+- Promotional language that reads like an ad (unless the article IS sponsored)
+- Excessive use of superlatives ("最强", "第一", "最好" without citation)
+- Unverified statistics or data without attribution
+
+When in doubt, write with a neutral, informative tone. State facts, not opinions
+about controversial topics.
+
+### SEO (Search Engine Optimization)
+
+| Rule | Details |
+|------|---------|
+| `title` under 60 chars | Search engines truncate longer titles |
+| `description` 120–160 chars | Optimal length for SERP snippet |
+| Front-load keywords in `title` | Put the most important concept in the first half |
+| Use descriptive `##` headings | Search engines use headings to understand structure |
+| Natural keyword density | Mention key terms naturally 3–5 times across the article — don't stuff |
+| Internal links | Link to other blog posts when relevant: `[相关文章](/blog/{slug})` |
+| External authority links | Link to docs, papers, or official sources when making claims |
+| External term linking | First mention of any tool/framework/company/concept must link to its official site or docs |
+| Image alt text | Every `![]()` must have descriptive alt text containing relevant keywords |
+| First paragraph hook | The opening paragraph should contain the primary keyword and clearly state what the article covers |
+
+### GEO (Generative Engine Optimization)
+
+**Goal:** Make the article easy for LLMs (ChatGPT, Perplexity, Gemini, etc.) to
+understand, quote, and cite.
+
+| Rule | Why |
+|------|-----|
+| Start with a **clear thesis statement** | LLMs extract the article's purpose from the first paragraph |
+| Use **structured sections** with descriptive headings | LLMs parse heading hierarchy to build understanding |
+| **Define terms** when first introduced | LLMs benefit from explicit definitions: "CI/CD（持续集成/持续部署）" |
+| Use **lists and tables** for structured data | LLMs parse structured content more accurately than prose |
+| Include a **summary or takeaway** at the end | LLMs often quote conclusions and summaries |
+| State **key points explicitly** — don't bury them in metaphors | LLMs prefer direct statements over indirect language |
+| Include **dates, versions, and specifics** | "Astro 6" not just "Astro"; "2026-05" not "recently" — helps LLMs with temporal relevance |
+| Use **unique, specific phrasing** | Generic phrasing ("it's important to note") gets ignored; specific insights get quoted |
+
+---
+
 ## Preview — Standalone HTML from Live Source
 
 Every tier generates the preview the same way: **read the blog's actual source files
@@ -343,6 +417,7 @@ grep -rh "^categorySlug:" {blog-repo}/src/content/blog/*.md | sort -u
 ### Phase 6 — Write the Article
 
 Write full Markdown with frontmatter that matches the schema read in Phase 5.
+**Follow all rules in the Writing Standards section above.**
 
 **Save to staging location** (see Article Staging Location table above):
 
@@ -358,8 +433,16 @@ Rules:
 - `date`: today, `YYYY-MM-DD`
 - `draft`: ALWAYS `true` at this stage
 - Match user's language, adapt tone
-- 800+ words, proper Markdown, include code/image placeholders
+- Target 1000-3000 words when the topic supports it; short notes are allowed only when the user explicitly wants a brief post
+- Proper Markdown, include code/image placeholders when relevant
 - Filename: kebab-case, no collisions
+- **Cross-platform safe:** standard Markdown only, no HTML, no footnotes
+- **SEO optimized:** title < 60 chars, description 120–160 chars, keyword in first paragraph
+- **GEO friendly:** clear thesis, structured sections, explicit definitions, summary at end
+- **External links:** first mention of every third-party tool, framework, library, standard, paper, or external resource has a meaningful link
+- **Description quality:** standalone 2-3 sentence AI-readable summary with the core keywords
+- **Natural slug:** use words that match likely reader search phrasing, not opaque IDs
+- **Platform safe:** neutral tone, no superlatives without citation, no sensitive content
 
 Tell the user where the article was saved: "Article saved to `{staging_path}`"
 
@@ -367,7 +450,8 @@ Tell the user where the article was saved: "Article saved to `{staging_path}`"
 
 - **Tier 1/2:** Copy to `{blog-repo}/public/blog/{categorySlug}/`
 - **Tier 3:** Copy to `./docs/blog-publish/{categorySlug}/` for local reference, upload via API in Phase 11
-- Path: `![Alt](/blog/{categorySlug}/image-name.webp)`
+- Path: `![Descriptive alt text](/blog/{categorySlug}/image-name.webp)`
+- **Every image must have descriptive alt text** (SEO + accessibility + cross-platform)
 
 ### Phase 8 — Validate Article Format
 
@@ -392,30 +476,51 @@ Run every check below. Fix issues inline if possible, then report results.
 
 | # | Check | Rule | Auto-fix? |
 |---|-------|------|:---------:|
-| 4 | `title` present | Non-empty string | ❌ Block |
-| 5 | `description` present | Non-empty string, 1–3 sentences | ❌ Block |
+| 4 | `title` present | Non-empty string, < 60 chars | ❌ Block |
+| 5 | `description` present | 120–160 chars, contains primary keyword | ❌ Block |
 | 6 | `date` present & valid | `YYYY-MM-DD` format, must be a real date | ✅ Default to today |
 | 7 | `category` present | Non-empty string | ❌ Block |
 | 8 | `categorySlug` present | Non-empty, lowercase, hyphenated | ✅ Derive from `category` |
 | 9 | `draft` is `true` | Must be boolean `true` at this stage | ✅ Set to `true` |
 
+**Cross-platform compatibility (WARN + auto-fix):**
+
+| # | Check | Rule | Auto-fix? |
+|---|-------|------|:---------:|
+| 10 | No HTML tags in body | No `<div>`, `<span>`, `<br>` etc. in Markdown body | ✅ Convert to Markdown |
+| 11 | No `#` (h1) in body | Only `##` and `###` headings allowed | ✅ Convert `#` → `##` |
+| 12 | No footnotes | No `[^n]` footnote references | ✅ Convert to inline links |
+| 13 | Image alt text | Every `![]()` has non-empty alt text | ❌ Warn |
+
 **Content quality (WARN — non-blocking but fix if possible):**
 
 | # | Check | Rule | Auto-fix? |
 |---|-------|------|:---------:|
-| 10 | Body length | ≥ 400 words (warn if < 800, allow user override) | ❌ Warn |
-| 11 | Headings | At least one `##` heading in body | ❌ Warn |
-| 12 | Unclosed code blocks | Every opening ``` has a closing ``` | ✅ Close them |
-| 13 | Empty sections | No heading followed by zero content before next heading | ❌ Warn |
-| 14 | Image paths | All `![]()` paths start with `/blog/` or are external URLs | ✅ Fix paths |
+| 14 | Body length | Target ≥ 1000 words; warn if 800-999; ask user before publishing if < 800 unless explicitly brief | ❌ Warn / Block if not approved |
+| 15 | Headings | At least three `##` headings when article length supports it; no skipped heading levels | ❌ Warn |
+| 16 | Unclosed code blocks | Every opening ``` has a closing ``` | ✅ Close them |
+| 17 | Empty sections | No heading followed by zero content before next heading | ❌ Warn |
+| 18 | Image paths | All `![]()` paths start with `/blog/` or are external URLs | ✅ Fix paths |
+| 19 | First paragraph | Contains the article's primary topic/keyword | ❌ Warn |
+| 20 | External links | First mention of tools/frameworks/companies/concepts has a meaningful Markdown link to the official source or original reference | ✅ Add links / ❌ Block if unknown |
+| 21 | Description quality | 2-3 sentences, includes core keywords, readable as an independent AI citation snippet | ❌ Warn |
+| 22 | Natural slug | Slug uses meaningful words, not numeric IDs, one-letter tokens, or opaque abbreviations | ✅ Improve before preview |
+
+**SEO/GEO quality (WARN — non-blocking):**
+
+| # | Check | Rule | Auto-fix? |
+|---|-------|------|:---------:|
+| 23 | Descriptive headings | `##` headings describe content, not generic ("更多内容") | ❌ Warn |
+| 24 | Has summary/conclusion | Article ends with a summary or takeaway section | ❌ Warn |
+| 25 | Specifics present | Contains dates, versions, or numbers (not just "recently") | ❌ Warn |
 
 **Filename (block if invalid):**
 
 | # | Check | Rule | Auto-fix? |
 |---|-------|------|:---------:|
-| 15 | kebab-case | Only `a-z0-9-`, no spaces, underscores, or uppercase | ✅ Convert |
-| 16 | No collision | Filename doesn't already exist in `src/content/blog/` | ✅ Append suffix |
-| 17 | `.md` extension | Filename ends with `.md` | ✅ Append |
+| 26 | kebab-case | Only `a-z0-9-`, no spaces, underscores, or uppercase | ✅ Convert |
+| 27 | No collision | Filename doesn't already exist in `src/content/blog/` | ✅ Append suffix |
+| 28 | `.md` extension | Filename ends with `.md` | ✅ Append |
 
 **Reporting format:**
 
@@ -423,6 +528,7 @@ Run every check below. Fix issues inline if possible, then report results.
 ✅ Format validation passed (or)
 ⚠️ Format validation: {N} issues found and auto-fixed (list them)
 🚫 Format validation: {N} critical issues require attention (list them)
+📊 SEO/GEO: {N} suggestions (list them)
 ```
 
 **If any BLOCK-level check cannot be auto-fixed, stop and ask the user for input.**
@@ -478,6 +584,18 @@ Ask: "Ready to publish?" Wait for explicit confirmation.
    Tell the user: "Local copy at `./docs/blog-publish/{filename}.md` — you can delete it or keep it."
 
 **Commit message:** `post: publish {title}`
+
+### Phase 12 — Update llms-full.txt
+
+After publish succeeds, update the AI-readable full content index.
+
+1. Read `public/llms-full.txt` from the blog repo.
+2. Insert the published article in the blog index with title, date, category, description, HTML URL, and Markdown URL.
+3. Add or refresh the article's full Markdown section under `## Full Blog Markdown`.
+4. Commit and push the `llms-full.txt` update with a focused message such as `chore: update llms full content index`.
+5. If `llms-full.txt` does not exist yet, create it from the current blog posts before inserting the new article.
+
+Do this as a separate commit from the article publish commit so content publication and AI index maintenance remain reviewable.
 
 ---
 

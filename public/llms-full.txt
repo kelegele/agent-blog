@@ -1,0 +1,892 @@
+# 可了个乐 (kelegele.com) - Full Content
+
+> AI x Creativity - 用 AI 探索创造的无限可能
+
+## Site Identity
+
+可了个乐是黄宝生（飞栗）的个人博客，聚焦 AI 与创造力的交叉领域。内容涵盖 AI Agent 开发、产品经理工作流、移动端 LLM 推理、Minecraft、个人创造项目复盘等。
+
+## Primary Links
+
+- Blog: https://www.kelegele.com
+- Creations: https://www.kelegele.com/creations
+- About: https://www.kelegele.com/about
+- GitHub: https://github.com/kelegele
+- Oh-My-PM: https://github.com/kelegele/oh-my-pm
+- AI Offline Translator: https://github.com/kelegele/ai-offline-translator
+- agent-blog: https://github.com/kelegele/agent-blog
+
+## Blog Index
+
+- [把产品经理工作流做成 Skill，解放重复工作](https://www.kelegele.com/blog/oh-my-pm-workflow-skills)
+  - Date: 2026-05-18
+  - Category: 极客
+  - Markdown: https://www.kelegele.com/blog/oh-my-pm-workflow-skills.md
+  - Summary: Oh-My-PM 把需求澄清、竞品分析、PRD、原型、发布和复盘沉淀成 Claude Code、Codex、WorkBuddy、Trae 可用的 Agent Skills，并给出安装和使用方式，让产品经理少做重复整理，多做判断、定方向和推动结果。
+- [把 440MB 大模型装进手机：离线翻译 App 开发复盘](https://www.kelegele.com/blog/mobile-llm-offline-translator)
+  - Date: 2026-05-17
+  - Category: 极客
+  - Markdown: https://www.kelegele.com/blog/mobile-llm-offline-translator.md
+  - Summary: 复盘 AI 离线翻译 App 的开发过程：如何用 Flutter、llama.cpp、JNI、ObjC++ 和 STQ1_0 量化模型，把 440MB 大模型跑到 macOS 与 Android 端，并总结端侧推理、跨端桥接和发布验证中的关键踩坑。
+- [用好 Vibe Coding，一夜更新你的 Coding 项目](https://www.kelegele.com/blog/ai-agent-coding)
+  - Date: 2026-05-16
+  - Category: 极客
+  - Markdown: https://www.kelegele.com/blog/ai-agent-coding.md
+  - Summary: 以前折腾一周的博客，AI 三下五除二就帮我彻底翻新了
+- [授agent以鱼，不如授以渔——写一个 0 依赖的 Skill 的感悟](https://www.kelegele.com/blog/skill-craft-lessons)
+  - Date: 2025-05-16
+  - Category: 创造力
+  - Markdown: https://www.kelegele.com/blog/skill-craft-lessons.md
+  - Summary: 从一个"往仓库写文件"的简单想法出发，造了一个任何环境都可以发博客的 Skill。教你快速落地Agent Skill...
+- [Minecraft 小服「nOWorld」—已关服 R.I.P.](https://www.kelegele.com/blog/minecraft-noworld)
+  - Date: 2022-01-26
+  - Category: 极客
+  - Markdown: https://www.kelegele.com/blog/minecraft-noworld.md
+  - Summary: 关于我与 Minecraft 的故事，以及那台曾经存在的小服务器
+- [新的开始，或说是提升](https://www.kelegele.com/blog/path-of-pm)
+  - Date: 2021-08-11
+  - Category: 创造力
+  - Markdown: https://www.kelegele.com/blog/path-of-pm.md
+  - Summary: 产品之路是我对创造力的追求与执着，更是我的一个提升
+
+## About Page
+
+本站与我
+
+    
+      一个互联网从业者，AI 应用探索者，热爱科学，极客思维。
+      关注 AI、互联网、产品、以及具有创新性的事物。常出没于 Bilibili、知乎、X、GitHub。
+    
+
+    
+      名字的由来
+      
+        『可了个乐』/ Kelegele — 进击中的AI探索站，常展现于互联网
+        Felix / 飞栗 — 这几个名称常指代本站作者，通信往来、书面表达以及社交平台可能会看到
+      
+      站名起源：少不更事，成年前，觉之凡事需冷静，大赞理性之光辉，然有座右铭"不以物喜不以己悲"。然则常无悲喜于表，乃深无情也，其失孩童之乐；年成丈夫才知乐之珍惜，求其甚切，非唯于己也，何者，人之乐乃信可乐也。然，可乐，说之曰，可了个乐。
+    
+
+    
+      我在做什么
+      
+        AI Agent 开发 — 构建能自主完成复杂任务的智能体系统
+        AI × 产品经理 — 用 AI 重新定义产品工作流，从需求到交付
+        AI 工具探索 — 测试、对比、组合各种 AI 工具，找到最佳实践
+      
+    
+
+    
+      本站可能存在的价值
+      
+        记录作者一些学习过程
+        记录一些对现实的感悟
+        发一些牢骚
+        记录一些项目的过程
+        做一些有意义的教程
+        写一些无意义的骚话
+      
+    
+
+    
+      技术栈
+      
+        Vibe Coding
+      
+    
+
+    
+      联系我
+      
+        GitHub ↗
+        felicis1024&#64;gmail.com
+
+## Open Source Projects And Creations
+
+The site highlights AI experiments, tools, demos, and thoughts. Source data snapshot from `src/data/creations.ts`:
+
+```ts
+export const creationStatuses = ['Live', 'Demo', 'Thoughts'] as const;
+
+export type CreationStatus = (typeof creationStatuses)[number];
+
+export type CreationVisual =
+  | {
+      kind: 'image';
+      src: string;
+      alt: string;
+    }
+  | {
+      kind: 'placeholder';
+      label?: string;
+    };
+
+export type Creation = {
+  title: string;
+  description: string;
+  status: CreationStatus;
+  tags: string[];
+  visual?: CreationVisual;
+  openUrl?: string;
+  readUrl?: string;
+};
+
+export const creations: Creation[] = [
+  {
+    title: 'AI 离线翻译',
+    description: '把 440MB 翻译大模型装进手机，在 macOS 与 Android 端完成本地推理、模型管理和发布验证。',
+    status: 'Live',
+    tags: ['Flutter', 'llama.cpp', 'GGUF'],
+    visual: {
+      kind: 'image',
+      src: '/blog/geek/ai-offline-translator-macos.png',
+      alt: 'AI 离线翻译 macOS 端实机翻译截图',
+    },
+    openUrl: 'https://kelegele.github.io/ai-offline-translator/',
+    readUrl: '/blog/mobile-llm-offline-translator',
+  },
+  {
+    title: 'AI Agent Blog',
+    description: '用 Astro 6 和一套 Vercel Blog 风格设计规范，把旧博客迁移成新的 AI 创造力记录站点。',
+    status: 'Live',
+    tags: ['Astro', 'Vibe Coding', 'Design System'],
+    visual: {
+      kind: 'image',
+      src: '/blog/geek/agent-blog-homepage.webp',
+      alt: 'AI Agent Blog 首页截图',
+    },
+    openUrl: '/',
+    readUrl: '/blog/ai-agent-coding',
+  },
+  {
+    title: 'Skill Craft 实践',
+    description: '从零依赖发布博客的 Skill 实践中，总结 Agent 工作流如何降低环境门槛。',
+    status: 'Thoughts',
+    tags: ['Agent Skill', 'Workflow', 'Writing'],
+    visual: {
+      kind: 'placeholder',
+      label: 'Skill',
+    },
+    readUrl: '/blog/skill-craft-lessons',
+  },
+];
+```
+
+## Full Blog Markdown
+
+### 把产品经理工作流做成 Skill，解放重复工作
+
+- Date: 2026-05-18
+- Category: 极客
+- URL: https://www.kelegele.com/blog/oh-my-pm-workflow-skills
+- Markdown URL: https://www.kelegele.com/blog/oh-my-pm-workflow-skills.md
+- Description: Oh-My-PM 把需求澄清、竞品分析、PRD、原型、发布和复盘沉淀成 Claude Code、Codex、WorkBuddy、Trae 可用的 Agent Skills，并给出安装和使用方式，让产品经理少做重复整理，多做判断、定方向和推动结果。
+
+这篇文章介绍的是 **[Oh-My-PM](https://github.com/kelegele/oh-my-pm)**：一个把**产品经理工作流**做成 **[Agent Skill](https://docs.anthropic.com/en/docs/claude-code/skills)** 的插件项目。它不是一个新的 [SaaS](https://en.wikipedia.org/wiki/Software_as_a_service)，也不是一个“万能产品经理机器人”，而是把**需求澄清**、**竞品分析**、**PRD**、**原型**、**发布协调**和**上线复盘**这些高频流程，沉淀成 [Claude Code](https://claude.ai/code)、[Codex](https://github.com/openai/codex)、[WorkBuddy](https://www.codebuddy.cn/) 和 [Trae](https://www.trae.ai/) 等 Agent 工具可以复用的 Skills。
+
+我的出发点很简单：**产品经理**的很多工作并不是低价值工作，而是重复、繁琐、上下文很多。每次写 [PRD](https://www.atlassian.com/agile/product-management/requirements)，都要重新整理背景、目标、用户场景、范围、验收标准；每次做竞品分析，都要重新搭对比维度；每次功能上线，都要重新列发布清单、风险项和复盘指标。
+
+这些工作不能完全模板化，因为每个产品、行业、阶段都不同。但它们也不应该每次从零开始。**Agent Skill** 正好卡在中间：把稳定的流程、判断标准、输出格式和上下文传递方式固定下来，把具体判断留给人和模型。
+
+## Oh-My-PM 是什么
+
+Oh-My-PM 是一个面向产品经理的 **AI Agent 工作流系统**，仓库在 [kelegele/oh-my-pm](https://github.com/kelegele/oh-my-pm)。
+
+它当前的核心结构是：
+
+- **20 个 Skills**，覆盖产品工作的主要环节
+- **8 个 Subagents**，处理研究、竞品、访谈、数据、复盘等长上下文任务
+- **4 个 Commands**，用于直接触发完整工作流
+- **5 层产品工作流**：需求感知、策略规划、方案设计、交付协调、价值验证
+
+这 5 层对应的是一个完整闭环：
+
+- 需求感知：市场情报、用户研究、竞品分析、数据监控、需求澄清
+- 策略规划：产品定位、路线图规划、优先级排序
+- 方案设计：PRD 生成、HTML 原型、流程优化
+- 交付协调：需求评审、项目协调、发布管理
+- 价值验证：效果分析、反馈汇总、迭代规划
+
+![Oh-My-PM 五层产品工作流闭环图](/blog/geek/oh-my-pm-five-layer-loop.svg)
+
+这个结构解决的是一个实际问题：PM 工作不是单点任务，而是一条链路。竞品分析的结果应该能进入 PRD，PRD 应该能进入原型和评审，发布之后的数据和反馈又应该回到下一轮迭代。
+
+所以 Oh-My-PM 没有把能力做成一个巨大 prompt，而是拆成多个 Skill，并通过 **`context/` 目录**传递中间产物。比如 `competitive-analysis.json` 可以被 PRD 生成读取，`impact-analysis.json` 和 `feedback-synthesis.json` 可以被迭代规划读取。
+
+## 从 4 个 Skill 到 20 个 Skill
+
+这个项目不是一开始就长成现在这样。
+
+**v0.1.0** 只有 4 个核心 Skills：竞品分析、PRD 生成、迭代规划和 quick-prd。这个阶段解决的是最小闭环：先分析竞品，再写一份可落地的 PRD。
+
+**v0.2.0** 扩展成完整 5 层架构，把产品定位、路线图、优先级、需求评审、项目协调、发布管理、效果分析和反馈汇总都补齐。这个阶段的关键变化是：它从“几个好用的提示词”变成了“产品工作流系统”。
+
+**v0.3.0** 引入 8 个 [Subagents](https://docs.anthropic.com/en/docs/claude-code/sub-agents)。研究类任务、竞品任务、用户访谈任务会产生大量上下文，如果都塞进主对话，后续工作会变得混乱。Subagent 的价值是隔离任务、控制工具权限、让不同任务用不同模型，并且可以沉淀独立记忆。
+
+**v0.5.1** 加入 Commands：`/quick-prd`、`/full-pm-cycle`、`/feature-launch` 和 `/ompm`。这让常用工作流可以直接调用，而不是每次靠自然语言猜测。
+
+**v0.6.0** 把原型从外部工具依赖切到 [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) 原型。对 PM 来说，能快速看到 wireframe、mockup 或 interactive prototype，比“理论上可以连到某个设计工具”更重要。
+
+**v0.8.0** 引入 **Plan-and-Execute 模式**，给工作流加上阶段、状态追踪和质量门控。原因也很现实：AI 很容易一路往前冲，但产品工作需要在关键节点停下来确认方向。
+
+**v0.9.0** 之后，项目重点转向更好的插件化和跨工具可用性：Skill 目录扁平化、支持 Codex 安装、补齐中文文档、减少单个 Skill 对上下文的依赖。
+
+## 怎么安装
+
+如果你使用 Claude Code 或 OpenAI Codex，最直接的方式是通过 **`skills` CLI** 安装：
+
+```bash
+# Claude Code
+npx skills add kelegele/oh-my-pm -a claude-code
+
+# Codex
+npx skills add kelegele/oh-my-pm -a codex
+
+# 只安装 PRD 生成 Skill
+npx skills add kelegele/oh-my-pm --skill prd-gen -a codex
+
+# 查看可安装的 Skills
+npx skills add kelegele/oh-my-pm --list
+```
+
+安装后可以用自然语言触发：
+
+```text
+帮我分析 Notion 和飞书文档的竞品差异
+写一个用户个人中心改版的 PRD
+这个功能上线后效果如何
+我们的产品应该如何定位
+```
+
+也可以用命令触发工作流：
+
+```bash
+/quick-prd "用户个人中心改版" 淘宝 京东
+/full-pm-cycle "新项目管理工具"
+/feature-launch "用户注册流程"
+```
+
+## 国产 Agent 工具怎么用
+
+我现在更推荐把 Oh-My-PM 理解成一组**标准化的 Skill 目录**，而不是只绑定某一个 Agent。只要一个工具能读取 `SKILL.md`，或者支持导入自定义技能，就可以复用这套工作流。
+
+下面保留两个更偏产品同学会遇到的国产 Agent 工具：WorkBuddy 和 Trae。
+
+## WorkBuddy：从技能市场上传，或让 Agent 创建
+
+[腾讯云代码助手 WorkBuddy](https://www.codebuddy.cn/) 的 [技能市场文档](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market) 里有三种入口：**上传技能**、**查找技能**、**创建技能**。
+
+手动添加 Oh-My-PM 的建议做法是：先按需打包单个高频 Skill，再上传到 WorkBuddy。
+
+比如先打包 PRD 生成：
+
+```bash
+git clone https://github.com/kelegele/oh-my-pm.git
+cd oh-my-pm
+zip -r prd-gen.zip skills/prd-gen
+```
+
+然后在 WorkBuddy 里：
+
+1. 打开技能市场
+2. 点击添加技能
+3. 选择上传技能
+4. 上传 `prd-gen.zip`
+5. 导入后启用这个技能
+
+如果你不想手动处理，可以直接让 WorkBuddy 创建一个等价技能。可以这样对它说：
+
+```text
+请帮我创建一个产品经理 PRD 生成 Skill。
+
+触发条件：
+当我说“写 PRD”“产品需求文档”“需求方案”时触发。
+
+能力要求：
+先澄清需求，再输出结构化 PRD。
+PRD 需要包含背景、目标、用户场景、功能范围、验收标准、风险、数据指标和后续迭代建议。
+
+输出要求：
+保存到当前项目的 context/prd/ 目录。
+如果目录不存在，请先创建。
+不要修改业务代码。
+```
+
+这类“让 Agent 帮添加”的方式很适合产品、运营、业务同学。你不用理解 `SKILL.md` 的全部格式，只要把触发条件、处理流程、输出格式讲清楚。
+
+## Trae：优先用导入入口，项目级目录做备选
+
+[Trae 官方博客](https://www.trae.ai/blog/trae_tutorial_0115) 已经有 **Agent Skills** 的创建、导入和使用指南。由于 Trae 的版本和入口变化比较快，我建议文章读者优先使用产品内的导入入口，而不是死记某个全局路径。
+
+手动方式：
+
+1. 打开 Trae 的设置或 Agent Skills 页面
+2. 找到 Skills、Rules and Skills 或 Agent Skills 相关入口
+3. 选择导入 Skill
+4. 上传或选择包含 `SKILL.md` 的 Skill 目录
+5. 在对话框里输入 `/`，确认 Skill 是否出现在列表里
+
+如果你的 Trae 版本支持项目级 `SKILL.md` 目录，也可以尝试：
+
+```bash
+git clone https://github.com/kelegele/oh-my-pm.git
+
+mkdir -p your-project/.trae/skills
+cp -R oh-my-pm/skills/prd-gen your-project/.trae/skills/
+cp -R oh-my-pm/skills/competitive-analysis your-project/.trae/skills/
+cp -R oh-my-pm/skills/quick-prd your-project/.trae/skills/
+```
+
+然后重启 Trae，在对话框里输入 `/` 查看是否能发现这几个 Skill。如果没有出现，就回到 UI 导入方式。不要在不确定的情况下改全局目录。
+
+也可以让 Trae Agent 帮你安装：
+
+```text
+请帮我把 GitHub 仓库 kelegele/oh-my-pm 里的 prd-gen、competitive-analysis、quick-prd 三个 Skill 安装到当前项目。
+
+要求：
+1. clone 或下载这个仓库；
+2. 检查每个 Skill 目录里是否有 SKILL.md；
+3. 创建 .trae/skills/ 目录；
+4. 只复制这三个 skills/<name>/ 目录；
+5. 不要修改当前项目的业务代码；
+6. 完成后告诉我是否需要重启 Trae，以及应该用哪些 / 命令调用。
+```
+
+这段 prompt 的重点是“只复制 Skill 目录，不要改业务代码”。让 Agent 帮安装工具时，一定要把边界写清楚。
+
+## 真正解放的是哪些重复工作
+
+Oh-My-PM 最适合处理的不是“拍脑袋做战略”，而是那些**每周都会出现、每次都要重新整理**的工作。
+
+比如快速 PRD：
+
+```bash
+/quick-prd "用户个人中心改版" 淘宝 京东
+```
+
+它会先做竞品分析，再把分析结果带入 PRD。这样生成的不是空泛需求文档，而是带竞品参照、用户场景和功能范围的初稿。
+
+比如需求澄清：
+
+```text
+我想做一个直播配置助理，先帮我澄清需求
+```
+
+Agent 不应该立刻写方案，而应该先问清楚目标用户、业务场景、输入输出、约束条件和成功指标。这个流程一旦做成 Skill，每次都会稳定执行。
+
+比如发布管理：
+
+```text
+帮我为用户注册流程生成上线检查清单
+```
+
+它可以稳定输出发布范围、风险项、回滚预案、灰度策略、通知对象和上线后观察指标。
+
+这些事情以前都靠 PM 自己复制旧文档、改标题、查漏补缺。Skill 的价值就是把这些“每次都差不多，但又不能完全一样”的流程固化下来。
+
+## 为什么要用 Subagent
+
+有些任务适合直接用 Skill，有些任务适合交给 Subagent。
+
+**Skill 更像工作说明书**。它告诉主 Agent：什么时候触发、按什么流程做、输出什么格式、要遵守什么质量标准。
+
+**Subagent 更像一个独立执行者**。市场研究、竞品分析、用户访谈、数据监控、效果复盘这些任务，通常会产生大量材料。如果全部留在主对话里，后续 PRD 和发布计划会被上下文噪音淹没。
+
+所以 Oh-My-PM 把 8 个任务拆给 Subagents：
+
+- market-researcher：市场研究
+- competitive-analyst：竞品分析
+- user-interviewer：用户研究
+- data-monitor：指标监控
+- process-optimizer：流程优化
+- impact-analyst：效果分析
+- feedback-collector：反馈汇总
+- pm-orchestrator：完整工作流编排
+
+这不是为了炫技，而是为了让长任务有隔离空间，让主对话保持清晰。
+
+## 开发 Skill 的几个经验
+
+第一，**Skill 要能独立安装**。
+
+早期我也容易把共享规则放在某个公共文件里。但一旦用户只安装单个 Skill，公共文件就可能丢失。所以后来感知层的反幻觉规则被内嵌到每个相关 Skill 里。独立可用比结构漂亮更重要。
+
+第二，**不要只写“怎么输出”，还要写“什么时候停下来问”**。
+
+产品工作最怕 Agent 太主动。需求不清楚时，它不应该编；竞品信息没有来源时，它不应该猜；PRD 场景没有确认时，它不应该默认。好的 Skill 必须有澄清 gate。
+
+第三，**用文件传递上下文，比只靠聊天记录稳定**。
+
+`context/competitive-analysis.json`、`context/prd/*.md`、`context/impact-analysis.json` 这些文件看起来朴素，但它们让工作流可以跨会话、跨 Skill 接力。聊天记录适合交流，文件适合沉淀。
+
+第四，**国产 Agent 工具要按它自己的入口适配**。
+
+不同工具的入口不同：WorkBuddy 偏技能市场上传和创建，Trae 偏导入和产品内管理。不要假设所有工具都支持同一条命令。更稳的做法是：保留标准 `SKILL.md` 目录结构，再给每个工具写清楚安装路径。
+
+第五，**别把所有能力堆进一个万能 Skill**。
+
+PM 工作链路很长。如果一个 Skill 同时负责市场研究、PRD、原型、发布和复盘，它一定会变得难维护。拆成小 Skill，再用 workflow 串起来，反而更稳定。
+
+## 写在最后
+
+PM Agent 不该只是一个聊天机器人。
+
+真正有用的 PM Agent，应该能把专业流程沉淀下来：什么时候问问题，什么时候查资料，什么时候写文档，什么时候做评审，什么时候进入下一阶段。
+
+Oh-My-PM 想做的就是这件事：把产品经理的重复工作做成可安装、可复用、可迁移的 Skills。Claude Code 可以用，Codex 可以用，WorkBuddy 和 Trae 也可以通过导入或 Agent 辅助创建来使用。
+
+工具会变，目录会变，模型会变。但有一件事不会变：PM 的价值不在于反复整理格式，而在于做判断、定方向、识别风险和推动结果。
+
+Skill 要解放的，正是这些判断之前的重复劳动。
+
+### 把 440MB 大模型装进手机：离线翻译 App 开发复盘
+
+- Date: 2026-05-17
+- Category: 极客
+- URL: https://www.kelegele.com/blog/mobile-llm-offline-translator
+- Markdown URL: https://www.kelegele.com/blog/mobile-llm-offline-translator.md
+- Description: 复盘 AI 离线翻译 App 的开发过程：如何用 Flutter、llama.cpp、JNI、ObjC++ 和 STQ1_0 量化模型，把 440MB 大模型跑到 macOS 与 Android 端，并总结端侧推理、跨端桥接和发布验证中的关键踩坑。
+
+这篇文章复盘一个**移动端离线大模型**项目：**AI 离线翻译 App**。它的目标很直接：把一个 **440MB** 的翻译专用大模型放到手机里，本地完成翻译，不依赖云端 API。
+
+项目成果已经开源：
+
+- GitHub 仓库：[kelegele/ai-offline-translator](https://github.com/kelegele/ai-offline-translator)
+- 发布页：[AI 离线翻译](https://kelegele.github.io/ai-offline-translator/)
+
+![AI 离线翻译 macOS 端实机翻译截图](/blog/geek/ai-offline-translator-macos.png)
+
+<img src="/blog/geek/ai-offline-translator-android.jpg" alt="AI 离线翻译 Android 端模型管理截图" width="360" />
+
+最终版本跑通了 **[macOS](https://developer.apple.com/macos/)** 和 **[Android](https://developer.android.com/)**。macOS 用来快速验证 UI、模型加载和推理链路，Android 是移动端落地的主目标。这个项目真正难的不是"调用大模型"，而是把**模型格式、原生推理、跨端桥接、模型管理和发布验证**串成一条稳定链路。
+
+## 为什么做离线翻译
+
+翻译是一个很适合端侧大模型的场景。
+
+它的输入输出短，不需要很长的上下文。用户也天然关心隐私，很多待翻译内容不适合上传到服务器。交互也足够清晰：输入原文、选择语言、等待译文、复制结果。
+
+所以这个项目一开始就不是"云端 API 外壳"。目标是让模型真的在设备端跑起来：
+
+- App 本体尽量小，模型按需下载或导入
+- 推理完全发生在本机
+- macOS 和 Android 共用一套 native 推理引擎
+- UI 保持工具型，不做复杂营销包装
+
+技术路线也因此确定：**[Flutter](https://flutter.dev/)** 负责跨平台 UI，**[llama.cpp](https://github.com/ggml-org/llama.cpp)** 负责原生推理，中间用一层很薄的平台桥接连接。
+
+## 关键问题：模型怎么进手机
+
+项目使用 **[Hy-MT1.5](https://modelscope.cn/models/AngelSlim/Hy-MT1.5-1.8B-1.25bit-GGUF)** 翻译模型，**[GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md)** 文件约 **440MB**。这个体积能进手机，是因为它用了 **1.25bit STQ1_0 量化**。对比原始 bf16 模型大约 7GB 的体积，压缩比例接近 16 倍。
+
+但 STQ1_0 不是 llama.cpp 主线默认支持的量化格式，需要使用 llama.cpp 的 **[PR #22836](https://github.com/ggml-org/llama.cpp/pull/22836)** 兼容路径。这意味着 `third_party/llama.cpp` 不能随意更新。每次更新 submodule 前，都要确认 `Hy-MT1.5-1.8B-STQ1_0.gguf` 能加载，并完成最小翻译。
+
+这也是端侧大模型和普通 App 资源的区别：模型格式、量化类型、推理库版本和 CPU 指令路径是绑在一起的。错一环，不是效果差一点，而是直接加载失败或输出乱码。
+
+## 架构：Flutter UI + shared C++ engine
+
+最终架构分成四层：
+
+```text
+Flutter UI (Dart)
+  -> MethodChannel
+Platform Bridge (Swift / Kotlin)
+  -> C++ function call
+TranslatorEngine (C++)
+  -> links against
+llama.cpp
+```
+
+Flutter 层负责翻译页面、模型管理、语言选择和打字机流式渲染。平台层负责文件选择、模型下载、线程调度和 MethodChannel。真正的推理逻辑收敛到 `translator_engine.hpp` 和 `translator_engine.cpp`。
+
+C++ 引擎只暴露少量接口：
+
+```cpp
+struct TranslatorEngine {
+    bool loadModel(const char* model_path);
+    void translate(const char* text, char* out, size_t out_size);
+    void cancel();
+    bool isModelLoaded();
+};
+```
+
+macOS 通过 **[ObjC++ wrapper](https://clang.llvm.org/docs/UsersManual.html#objective-c)** 调这套 C++ 引擎，Android 通过 **[JNI](https://docs.oracle.com/javase/8/docs/technotes/guides/jni/)** 调同一份 `translator_engine.cpp`。两个平台的差异被限制在桥接层，推理核心不复制两份。
+
+引擎内部封装了 llama.cpp 的模型加载、jinja chat template、tokenize、采样和生成循环。参数上也刻意克制：`n_ctx=256`，`n_threads=2`。翻译场景不需要长上下文，小窗口可以降低内存占用和推理延迟。
+
+## 开发过程
+
+**v0.0.1** 先跑通 macOS。目标是验证最小闭环：Flutter UI 能打开，模型能导入，llama.cpp 能加载，输入 `Hello` 能翻译成 `你好`。
+
+**v0.0.2** 加入 **[ModelScope](https://modelscope.cn/)** 模型下载。模型不再要求用户手填路径，而是通过 App 下载或导入，保存到 App 私有目录。
+
+**v0.0.3** 开始补齐 Android：TranslatorService、MethodChannelHandler、ModelScope 下载器、GGUF 文件选择器、JNI 桥接、[CMake](https://cmake.org/) 配置，以及 `scripts/build_android_llama.sh`。这一步也把 C++ 推理引擎抽到 `flutter_app/native/translator_engine/`，让 macOS 和 Android 共用同一份代码。
+
+这个版本也踩了一个严重的发布坑：代码写完、构建通过，不等于功能完成。没有 Android 设备实际运行验证就打 tag，后来撤回。从那之后项目定下规则：没有在目标平台真实跑通，不打 tag，不发 release。
+
+**v0.1.0** 才是第一个双平台功能完整版本。它支持 macOS DMG 和 Android APK 分发，模型下载、导入、自动检测、加载、流式翻译、取消和复制都形成闭环。安装包可以从项目的 [GitHub Releases](https://github.com/kelegele/ai-offline-translator/releases) 获取。
+
+## 几个关键教训
+
+第一，**不要手写 prompt**。Hy-MT1.5 的 chat template 是 jinja 格式，必须用 llama.cpp common 层处理。早期手写 token 序列，结果输出全是重复字符。
+
+第二，**Flutter bottom sheet 状态要单独同步**。`showModalBottomSheet` 有独立 widget 树，父组件 `setState` 不会触发 sheet 重建。模型下载进度、加载状态这类信息，必须传 `ChangeNotifier` 并在 sheet 内监听。
+
+第三，**macOS 文件选择器必须回主线程**。`NSOpenPanel` 在非主线程调用时可能不弹出，MethodChannel 回调不能假设就在主线程。
+
+第四，**Android 权限和窗口行为不能漏**。下载模型要声明 `INTERNET` 权限；键盘弹起时工具型翻译 App 不应该被压缩，所以用了 `adjustNothing` 和 `resizeToAvoidBottomInset: false`。
+
+第五，**发布验证必须看真实设备**。`flutter analyze`、`flutter test`、`flutter build` 只能证明代码能编译。端侧大模型的运行时问题通常来自 ABI、模型路径、动态库链接、权限和线程调度。
+
+## 可以复用什么
+
+这个项目里最值得复用的是 `translator_engine.hpp` 和 `translator_engine.cpp`。它们把 llama.cpp 的加载、chat template、tokenize、采样和生成循环封装成纯 C++ 引擎，和 Flutter 没有强耦合。
+
+第二个是 Android 构建脚本。`scripts/build_android_llama.sh` 负责把 llama.cpp 交叉编译成 **arm64-v8a 静态库**，再交给 Android CMake 链接。项目明确不支持 x86/x86_64 Android ABI，因为目标是真机移动端。
+
+第三个是桥接方式：Android 用 JNI/CMake，macOS 用 ObjC++。如果你要做"Flutter UI + 原生大模型推理"，这套结构可以直接参考。
+
+第四个是模型管理策略。模型不要内置进 App 包，而是下载或导入到 App 私有目录。这样 App 本体保持 15MB 到 30MB，440MB 模型按需获取。
+
+## 发布页也是成果
+
+项目后期做了 [GitHub Pages](https://pages.github.com/) 发布页：`docs/index.html`。它展示项目特性、架构、下载入口和实机截图。
+
+页面几轮调整后，最后选择了工业暗色和终端气质：[DM Sans](https://fonts.google.com/specimen/DM+Sans) 做标题，[JetBrains Mono](https://www.jetbrains.com/lp/mono/) 做技术标签，重点强调端侧推理和工程感。这个页面的作用不是炫技，而是把项目说清楚：这不是一个云端翻译壳，而是一个真的把 llama.cpp 包进移动端 App 的工程。
+
+## 总结
+
+这个项目最重要的收获是：**移动端大模型不是单点 demo，而是一套工程系统**。
+
+模型要能被推理库识别，量化格式要匹配，原生库要能为目标 ABI 构建，UI 要能表达模型状态，文件和权限要符合平台规则，发布前还必须在目标设备真实跑通。
+
+Flutter、llama.cpp、JNI、ObjC++、CMake、GGUF、STQ1_0 都只是局部技术。真正决定项目能不能落地的，是把它们组合成稳定链路的能力。
+
+### 用好 Vibe Coding，一夜更新你的 Coding 项目
+
+- Date: 2026-05-16
+- Category: 极客
+- URL: https://www.kelegele.com/blog/ai-agent-coding
+- Markdown URL: https://www.kelegele.com/blog/ai-agent-coding.md
+- Description: 以前折腾一周的博客，AI 三下五除二就帮我彻底翻新了
+
+我有一个博客，它焕然一新了～
+
+![Vibe Coding 新博客首页截图](/blog/geek/agent-blog-homepage.webp)
+
+这篇文章讲的是：我如何用 **Vibe Coding** 和 **AI Agent**，把一个 2019 年的 **[Vuepress](https://vuepress.vuejs.org/) 个人博客**，迁移成新的 **[Astro 6](https://astro.build/) 静态博客**。
+
+`blog.kelegele.com`，2019 年搭建的，用的 **Vuepress**。当时折腾了一个多星期，从选主题、调配色、改布局到部署上线，每一步都亲力亲为。那个博客陪我走过了大学和刚工作的日子，虽然更新频率堪忧，但它一直在那。
+
+直到最近，我实在受不了了。
+
+不是内容的问题，是技术栈的问题。**Vuepress** 越来越重，改个样式要翻半天主题源码，每次 `npm run build` 都像在抽签。我想给它换个大 makeover——新的框架、新的设计、新的体验。
+
+但你也知道，这种"重做一遍"的事情，对个人项目来说意味着什么。大概率是：周末兴冲冲开工，周三就烂尾了 😅。
+
+## 事情发生了变化
+
+这次不一样。我把整个博客从零重建，连设计带开发，一晚上搞定了。
+
+不是我变强了，是我多了一个搭档——**AI Agent**。
+
+说实话一开始我也没抱太大期望。以前也试过让 **AI 写代码**，那种感觉就像让一个没看过需求文档的实习生直接上手，写出来的东西能跑但完全不是你想要的。
+
+但这次不一样。
+
+我先花了一段时间写了一份设计文档 `DESIGN.md`。不是给设计师看的，是给 AI 看的。我把 **[Vercel Blog](https://vercel.com/blog)** 的设计风格拆解成了一整套规范——颜色系统、排版比例、圆角大小、阴影层次、组件结构，全部量化成具体的数值和规则。
+
+然后我对 AI 说：
+
+> 按 **Astro 6** 搭一个博客，设计规范全部在 `DESIGN.md` 里，首页参考 **Vercel Blog** 的文章列表布局，导航栏移动端要折叠，暗色主题也要支持。
+
+它就开始干活了。
+
+一个导航组件，带着 scoped styles、设计变量引用、暗色主题适配、移动端响应式，一气呵成。我看了看代码，挑了几个细节让它改——间距不对、圆角大小差了一点、hover 状态缺了过渡动画。改完，接近我想要的了。
+
+这种感觉怎么说呢……像是一个手脚很快但品味一般的新人，你只要把方向给对了，执行速度是真的快。
+
+## 一晚上的节奏
+
+那晚上的工作节奏大概是这样的：
+
+先搭项目骨架，选了 **Astro 6**——零 JS 框架，纯静态，构建速度飞快。这个选择我本来就需要做，**AI Agent** 只是在我确认之后帮我执行了。
+
+然后是导航栏。我对它说了我想要的效果，参考 **Vercel Blog** 的设计，它给我生成了完整组件。我调整了两轮。
+
+接着是首页、文章列表、文章详情页、暗色主题切换、Footer……每个组件都是类似的循环：我说需求，它出代码，我审查，它修改。快的几轮就过了，慢的大概来回五六次。
+
+最让我意外的是 **[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)**。以前我写 CSS 最痛苦的就是调细节——padding 差个 4px、flexbox 对不齐、Safari 上多出个间距……这些琐碎的东西以前要花我大半天。现在这些 **AI Coding** 处理得还不错，当然也有翻车的时候，但比起自己一行行写，效率还是高太多了。
+
+旧文章迁移也很快。两篇文章，复制过来调整一下 frontmatter 格式就好了。
+
+到凌晨两点多，整个博客能看了。我打开预览，浏览了一遍各个页面，灯关了，满意地睡了 😌。
+
+## 不是万能的
+
+但也有翻车的时候。
+
+有一次我让它做文章详情页的排版，它把标题和正文的间距搞成了 64px——我文档里明明写的是 24px。还有一次暗色主题切换的过渡效果，它写了一堆不必要的动画，闪烁得像故障艺术。
+
+最有趣的是"感觉"这个事情。有次我说"这个区域太重了，轻一点"，它把所有颜色都改成了浅灰色……不是，我不是这个意思 😂。
+
+所以你看，它还是需要你给的指令足够具体、足够精确。模糊的审美判断，它理解不了。你得把它翻译成数字和规则——这就是那份 `DESIGN.md` 的价值。
+
+## 想到以前
+
+想到 2019 年搭旧博客的时候，**Vuepress** 的主题我翻来覆去改了一个多星期。配色调了无数版，CSS 写了又删、删了又写，部署的时候还踩了一堆 Vercel 的坑。
+
+这次用 **Vibe Coding** 重建，一个晚上。
+
+工具变了，效率变了，但那件事没变——我就是想让我的博客好看一点，让写东西的体验舒服一点。这个想法 2019 年有，2026 年也有。
+
+以前折腾 [Minecraft](https://www.minecraft.net/) 服务器 nOWorld 也是这样，花了大量时间在配置和调优上，但核心动力就是想创造一个属于自己的空间。
+
+**AI** 把重复性的、机械的执行加速了，但"想要什么"这件事，还是得你自己来。
+
+> 工具在进化，创造的渴望不变 ✌️
+
+### 授agent以鱼，不如授以渔——写一个 0 依赖的 Skill 的感悟
+
+- Date: 2025-05-16
+- Category: 创造力
+- URL: https://www.kelegele.com/blog/skill-craft-lessons
+- Markdown URL: https://www.kelegele.com/blog/skill-craft-lessons.md
+- Description: 从一个"往仓库写文件"的简单想法出发，造了一个任何环境都可以发博客的 Skill。教你快速落地Agent Skill...
+
+> 从今年AI Agent For Work 大爆发以来，投入了大量时间和精力去学习，去认知 Agent 的能力，写了很多 Skill 固化工作流程。其中收获到一些认知，想与你分享：
+> 1. 授agent以鱼，不如授以渔。很简单，**[LLM](https://en.wikipedia.org/wiki/Large_language_model) 是 brain ，Skill 是 body**（有`Harness`的意味）。给agent 固定流程那他知识流水线/打螺丝的打工人，而把**思维方式**给到agent 那他就可以利用 LLM 去做一些创造性的事情，这一点是很有意思的。
+> 2. 环境依赖最为痛苦。这主要来源于身边朋友在使用 AI 时，常常会遇到的一些**环境依赖**问题。对于非计算机专业的人，环境依赖0 认知。AI 方面优秀的工具或 skill，都是早期计算机出身的人整出来的。后来人在学习时，处理起来异常难，让 AI 去处理的话，AI 会不考虑其他代价帮你处理。那我们就在设计的过程中，最好把**环境依赖降到最低**。
+> 
+> 以下就是我的实践过程。
+
+---
+
+起因很简单——我想做一个 Skill：在任何项目里，跟 Agent 说一句"写篇博客"，它就能帮我把这个项目的经历写成文章，发到我的 [Astro](https://astro.build/) 博客上。
+
+听起来不就是往仓库写一个 [Markdown](https://www.markdownguide.org/) 文件吗？能有多难？
+
+**结果我们从 v1.0 做到了 v1.8，中间推翻了六次。**
+
+这篇不是技术文档，是我在这个过程中的一些感悟。如果你也在写 Agent Skill，或者在设计 AI 工具，也许会有共鸣。
+
+## 环境是最大的诅咒
+
+作为一个开发者，我的第一反应是理所当然的：
+
+1. Clone 仓库
+2. `pnpm install`
+3. 写文章
+4. `pnpm dev` 预览
+5. `git push`
+
+丝滑。完美。然后我把这个 Skill 拿给我的同事——一位**产品经理**。她没有 [Node.js](https://nodejs.org/)，没有 [pnpm](https://pnpm.io/)，git 也没装好。她只有**一台电脑、一个浏览器、和一个 [GitHub](https://github.com/) 账号**。
+
+然后我意识到一件事情：**我习以为常的开发环境，恰恰是普通人使用 AI 工具最大的门槛。**
+
+这个问题其实不只存在于 AI 工具。回想一下，多少技术教程的第一步就是"先装个 XXX"？多少优秀的开源项目，用户在**安装这一步就放弃了**？只不过以前门槛在用户和软件之间，现在门槛在用户和 Agent 之间。Agent 替用户省掉了"学怎么用"的时间，但没省掉"**先装好环境**"的痛苦。
+
+所以我们设计了**三层访问机制**——有本地仓库用本地仓库，有 git 用 git，什么都没有就用 [GitHub API](https://docs.github.com/en/rest)，只需要 `curl` 加一个 Token。**三层里最低的一层，只需要一台能打开浏览器的电脑。**
+
+这是第一课：**设计 Skill 的时候，不要假设用户和你一样是开发者。** 你觉得"这也要装？"的东西，可能是别人放弃的最后一个理由。
+
+## 预览的困境
+
+写完文章总得预览一下效果吧？Astro 的预览需要 `pnpm dev`，又回到了 Node.js 的问题。
+
+我们想了很多方案：
+
+- 让用户装 Node.js？太重了，违背零依赖的初衷
+- 用 `npx` 临时跑？前提还是有 Node.js
+- 不预览直接发？太草率了
+
+最后我们找到了一个有点"野路子"的方案——让 Agent 从 GitHub 仓库**读取博客的真实源码文件**，把文章 Markdown 转成 [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)，套进博客的真实样式里，生成一个**独立的 `preview.html`**，然后用浏览器打开。
+
+不需要 Astro，不需要 Node.js，不需要任何构建工具。只要有浏览器就行。
+
+而且这个预览是**动态的**——每次都从仓库读最新的源码。所以博客改了样式，预览自动跟上，永远不会过时。
+
+这是第二课：**当正规路径走不通的时候，退一步想——用户最终需要的不是工具本身，而是工具的结果。** 用户不需要 [Astro dev server](https://docs.astro.build/en/reference/cli-reference/#astro-dev)，用户需要的是"在浏览器里看到文章长什么样"。
+
+## 最重要的一课：不要授以鱼，而要授以渔
+
+这个教训花了我最长时间才想明白。
+
+在早期版本里，我把很多东西**写死**在 Skill 里：
+
+- CSS 样式快照 → 嵌入在 Skill 文件里
+- 分类列表 → 硬编码 `极客/geek`、`创造力/creativity`
+- 本地仓库路径 → 硬编码绝对路径
+- Frontmatter schema → 写死在文档里
+
+看起来没问题，对吧？该有的信息都有了。
+
+但问题是：
+
+- 博客样式改了，Skill 里的快照就**过时了**
+- 新增了分类，Skill **不知道**
+- 换一台电脑，路径就**不对了**
+- Schema 加了新字段，Skill 还在用**旧的**
+
+**我把"答案"写给了 Agent，但没有教它"怎么找答案"。**
+
+后来我们把所有这些都改成了**动态**的：
+
+- 样式 → Agent 去**读仓库最新的源码文件**
+- 分类 → Agent 去**扫仓库里所有文章的 frontmatter**
+- 路径 → **自动检测**，有环境变量就用，没有就搜索
+- Schema → Agent **运行时读 `content.config.ts`**
+
+**好的 Skill 不存储答案，而是教 Agent 如何获取答案。**
+
+这其实是一个很深刻的原则。你给 Agent 的不是一份菜谱，而是一个**厨房的地图**。菜谱会过期，地图不会。食材会换季，但厨房的布局不变。
+
+我想这可能是写好 Agent Skill **最重要的一个心法**了。
+
+## Agent 比你想的更"固执"
+
+有一件事让我挺意外的。
+
+Skill 写好了，Agent 也装上了，我让同事试试。她的 Agent 回复是：
+
+> "不装不行，这三个都是必须的：Git、Node.js、pnpm"
+
+**它完全忽略了 Skill 里写的零依赖方案。**
+
+为什么？因为 Agent "知道" Astro 需要 Node.js。它的**训练数据**里有无数篇 Astro 教程，每篇的第一步都是 `npm install`。所以当它看到"Astro 博客"这个词，就自动跳到了结论——必须装 Node.js。Skill 里的 Tier 3 纯 API 方案？它根本没注意到。
+
+**Agent 的固有知识有时候比你的 Skill 指令更强。**
+
+这就像你给一个聪明的实习生写了一份详细的操作手册，但他干了三年类似的工作，所以翻了两页就觉得"这我懂"，然后按自己的经验来——结果搞错了。
+
+解决方案是在 Skill **最显眼的位置反复强调**关键信息。我们在文档最顶部加了一个 blockquote 警告，description 第一行写 `ZERO DEPENDENCIES`，Tier 3 标题加 `ZERO DEPENDENCIES`，Error Handling 里写 `NEVER ask the user to install git/Node/pnpm`。
+
+**把关键的事情重复三遍，放在 Agent 第一眼就能看到的地方。**
+
+这不是啰嗦，这是必要的。Agent 不像人，它不会"注意到"文档中间某一句"其实也可以不用装"。你得把重要的信息推到它**注意力最高的位置**。
+
+## 格式校验：人眼看漏的，机器不会
+
+一篇博客文章看起来简单，但出问题的点太多了：
+
+- Frontmatter 的 `---` 围栏漏了闭合，Astro 直接报错
+- `date` 写成了 `2024-13-45`，渲染炸了
+- 图片路径用了相对路径，线上 404
+- 正文只有 100 字就结束了
+- 代码块忘了关 ` ``` `，下面的内容全变成了代码字体
+
+这些事情人眼扫一遍很容易漏掉，但机器检查非常可靠。所以我们加了一个格式校验 Phase，**25 项检查**，分三个级别：**Block**（必须通过）、**Auto-fix**（自动修复）、**Warn**（提醒但不阻断）。
+
+文章在到达浏览器预览之前，格式问题已经被清零了。
+
+这让我想到一个更广泛的道理：**Agent 不只是帮你写东西的工具，它也可以是你发布流程的守门人。** 让 Agent 做它擅长的事——**精确、重复、不带感情的检查**——把人从这种工作中解放出来。
+
+## 从 v1.0 到 v1.8
+
+最后贴一下版本演进，每一次迭代背后都是一次**认知的升级**：
+
+| 版本 | 关键变化 | 认知升级 |
+|------|---------|---------|
+| v1.0 | 硬编码路径和依赖 | "能用就行" |
+| v1.1 | 加入纯 REST API 方案 | "不是所有人都是开发者" |
+| v1.2 | 浅克隆 + 本地预览 | "能少下就少下" |
+| v1.3 | 零依赖预览：读源码拼 HTML | "要的是结果，不是工具" |
+| v1.4 | 动态模板：每次从仓库读取 | "不要授以鱼，而要授以渔" |
+| v1.4.1 | 加强零依赖提示 | "Agent 比你想的更固执" |
+| v1.5 | 加入格式校验 | "Agent 是好的守门人" |
+| v1.6 | 动态 schema、编辑工作流 | "覆盖完整生命周期" |
+| v1.7 | 文章暂存位置按 Tier 分 | "每个环节都要想清楚文件在哪" |
+| v1.8 | 跨平台写作规范、SEO/GEO | "发布不是终点，传播才是" |
+
+## 写在最后
+
+我在工作中遇到很多人，他们不是计算机出身，但随着 **AI 逐渐通用化**，他们开始用 AI 工具来辅助工作。但每次碰到"依赖环境"的问题——装个 Node.js、配个环境变量、搞个 SSH key——他们就卡住了。
+
+这些不是他们的问题，是我们这些**工具设计者**的问题。
+
+好的工具应该**适应人**，而不是要求人适应工具。好的 Skill 应该在**任何环境下都能跑**，而不是只在开发者的电脑上能跑。
+
+如果你也在写 Agent Skill，不妨问自己一个问题：
+
+**"如果用户只有一台刚买的电脑，他能不能用？"**
+
+这个问题改变了我们整个设计方向。也许它也能改变你的。
+
+### Minecraft 小服「nOWorld」—已关服 R.I.P.
+
+- Date: 2022-01-26
+- Category: 极客
+- URL: https://www.kelegele.com/blog/minecraft-noworld
+- Markdown URL: https://www.kelegele.com/blog/minecraft-noworld.md
+- Description: 关于我与 Minecraft 的故事，以及那台曾经存在的小服务器
+
+关于《我的世界（Minecraft）》，它算是我整个成长阶段的启蒙玩物。它点燃了我创造的热情，激发了我往创造发力的引擎，在其自由的游戏空间当中，无数次激起我将 MC 与元宇宙「[Metaverse](https://en.wikipedia.org/wiki/Metaverse)」的浮想。
+
+![Minecraft](/blog/geek/mc.webp)
+
+## Minecraft & 产品这件事
+
+关于一个游戏服务器是不是一项产品的问题，我这里需要简单介绍一下。
+
+Minecraft 的第三方（或私人）服务器是对任何人都开放的，只要你有主机、能打开游戏，都能在任何地方架设游戏服务器，这就是 Minecraft 的开放性所在——并不仅仅是对玩家玩法的大型沙盘+开放世界，同样是对游戏开发者的完全开放。
+
+第三方架设的服务器完全可以依托 Minecraft 提供的开发平台自定义游戏内容，包括游戏插件、模组、玩法、服务以及规则等等。所以，Minecraft 本身就是平台型产品：toPlayers，它是一款游戏；toDevelopers，它是一个游戏开发平台。
+
+## nOWorld
+
+🎮 服务器：**「虚无领域」** AKA. nOWorld
+
+⌚️ 关键词：社区｜原生｜养老｜和谐
+
+nOWorld 是我和朋友们搭建的一个小型 Minecraft 服务器。
+
+### 存在两个时空纪元
+
+💥 **版本纪元**：跟随我的世界 Java 版本更新，大版本更新会重置地图，包括地图上的玩家建筑
+
+🌈 **虚无领域**：虚无领域地图并非自动生成，由玩家生成，没有版本概念，将长期存在
+
+### 玩法与初心
+
+纯纯的原版生存玩法，推荐社交、生存、建筑和养生。nOWorld 就像个休闲氧吧，当你 emo 的时候不妨到服里放松一下~
+
+> 人与人的关系由虚无到交织，就像量子纠缠，我们由单一的个体组成复杂的整体。在虚无领域时空构建你的"纠缠"世界~
+
+### 实况
+
+![玩家小屋](/blog/geek/mc.png)
+
+![出生点](/blog/geek/mc-2.png)
+
+![Space](/blog/geek/mc-3.png)
+
+> R.I.P. nOWorld 🪦 虽然已经关服，但那段一起探索、建造的时光，是我最早的「用技术创造」的体验。
+
+### 新的开始，或说是提升
+
+- Date: 2021-08-11
+- Category: 创造力
+- URL: https://www.kelegele.com/blog/path-of-pm
+- Markdown URL: https://www.kelegele.com/blog/path-of-pm.md
+- Description: 产品之路是我对创造力的追求与执着，更是我的一个提升
+
+结束了陪伴我四年的**计算机科学**，我开始了**产品经理**之路 🚀
+
+有人或许认为，我是从技术领域转向产品经理，从一个领域的坑跳到了另一个。至于是否如此，这需要回到最初的初衷。
+
+初次选择**计算机科学**，原因何在？
+
+高中时，我开始寻找我热爱的事物，能将其视为未来事业方向并一直为之奋斗。我发现了两个可能性，一个是**建筑设计**，另一个是**编程**。这两者的共同点是我的热爱，也成为我后来的初衷。**建筑设计**和**编程**，对于那个时候的我来说，一个是创造建筑，一个是创造信息服务。它们的共同点就在于创造，而选择**计算机**的初心也是如此。
+
+为何没有选择**建筑设计**呢？或许是理科思维所限，对设计存在一定的胆怯 😅。
+
+回首往事，从技术到**产品**，是跳坑还是深耕与提升？
+
+如果足够了解产品经理工作，如果还记得我的热爱和初心，不难发现，选择产品是必然的。产品经理的工作，简单概括来说，是为创造产品的开发，梳理和设计产品，抽象层次高于一切技术设计，抽象到产品、用户本身。
+
+就好比，**建筑设计**方案与**建筑施工团队**，世界顶级的建筑作品（产品），要有好的设计方案，也要有足够强的基建团队。设计方案需要考虑施工团队的本事，施工团队也要借助设计方案实现自己的建造价值。二者做的事情本质是一样的，只不过设计方案要跑在前面，要提前涉入深水区去探索，更深一步的去考虑设计问题。
+
+而**产品经理**的工作，就是跑在开发者的前面，提前考虑产品的价值、可用性、可行性，在"荒草"中给开发者指明一条前行的道路，确保产品这条路能够顺利建成 🌈。
+
+故如此，**产品经理**之路，更是我的一个提升，我对创造的进一步探索，我对初心的坚守，我对热爱的负责 💪。

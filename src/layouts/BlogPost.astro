@@ -10,7 +10,7 @@ interface Props {
 const { entry, readingTime } = Astro.props;
 const { title, description, date, category } = entry.data;
 const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
-const mdUrl = `/blog/md/${entry.id}`;
+const mdUrl = `/blog/${entry.id}.md`;
 ---
 
 <BaseLayout title={`${title} — 可了个乐`} description={description}>

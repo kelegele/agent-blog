@@ -63,6 +63,13 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 - Local commits are acceptable when requested, but pushing requires a fresh verification step because it triggers deployment.
 - When summarizing lessons learned for this repository, also harden durable workflow lessons into AGENTS guidance and memory instead of only replying in chat.
 
+## Skill Development Workflow
+
+- The canonical `blog-publish` skill source lives in `skill/SKILL.md`.
+- Do not edit `.agents/skills/blog-publish/SKILL.md` as the source of truth; it is a local installed copy.
+- When changing the skill locally, update `skill/SKILL.md` first, then refresh the local Codex copy with `npx skills add . -a codex` from the repository root.
+- After refreshing, inspect `.agents/skills/blog-publish/SKILL.md` or `skills-lock.json` if needed to confirm the installed copy matches the repository skill.
+
 ## UI/UX Design Rules
 
 - **All frontend UI/UX MUST strictly follow the design specification in `DESIGN.md`.** This includes: color tokens, typography scales, rounded corners, spacing, shadows, and component patterns.

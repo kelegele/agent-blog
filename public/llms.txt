@@ -1,0 +1,25 @@
+# 可了个乐 (kelegele.com)
+
+> AI x Creativity - 用 AI 探索创造的无限可能
+
+## Links
+
+- [Blog](https://www.kelegele.com)
+- [Creations](https://www.kelegele.com/creations)
+- [About](https://www.kelegele.com/about)
+- [GitHub](https://github.com/kelegele)
+- [Oh-My-PM](https://github.com/kelegele/oh-my-pm)
+- [AI Offline Translator](https://github.com/kelegele/ai-offline-translator)
+- [Full content](https://www.kelegele.com/llms-full.txt)
+
+## About
+
+可了个乐是黄宝生（飞栗）的个人博客，聚焦 AI 与创造力的交叉领域。
+内容涵盖 AI Agent 开发、产品经理工作流、移动端 LLM 推理、Minecraft 等。
+同时维护多个开源项目：Oh-My-PM（PM 工作流 Agent Skills）、
+AI 离线翻译 App、agent-blog（本站源码）等。
+
+## Content Scope
+
+本站主要面向希望理解 AI 工具、Agent 工作流、产品创造和个人项目实践的读者。
+文章通常以复盘、经验总结、项目拆解和创造过程记录为主。
