@@ -19,9 +19,11 @@ const categoryMap = Object.fromEntries(
   allPosts.map(p => [p.data.categorySlug || p.data.category, p.data.category])
 );
 const categories = [...new Set(allPosts.map(p => p.data.categorySlug || p.data.category))];
+const categoryName = categoryMap[cat ?? ''] ?? cat ?? '文章';
+const categoryDescription = `可了个乐的${categoryName}文章合集，记录 AI、产品、独立开发与创造实践中的观察、复盘和教程。`;
 ---
 
-<BaseLayout>
+<BaseLayout title={`${categoryName}文章 — 可了个乐`} description={categoryDescription}>
   <section class="hero">
     <h1 class="hero-title">可了个乐</h1>
     <p class="hero-subtitle">AI × Creativity</p>

@@ -7,10 +7,44 @@ import Analytics from '@vercel/analytics/astro';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title = '可了个乐 — AI × Creativity', description = '用 AI 探索创造的无限可能' } = Astro.props;
+const {
+  title = '可了个乐 — AI × Creativity',
+  description = '可了个乐是 Felix / Kelegele 的 AI 创造力博客，记录 AI Agent、产品工作流、独立开发、Vibe Coding 与创造实践。',
+  image = '/logo-black-bg.png',
+  type = 'website',
+  schema,
+} = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+const siteName = '可了个乐';
+const sameAs = [
+  'https://github.com/kelegele',
+  'https://blog.kelegele.com',
+];
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': new URL('/#website', Astro.site).href,
+  url: new URL('/', Astro.site).href,
+  name: siteName,
+  alternateName: ['Kelegele', 'Felix 的 AI 创造力博客'],
+  description,
+  inLanguage: 'zh-CN',
+  publisher: {
+    '@type': 'Person',
+    '@id': new URL('/about#person', Astro.site).href,
+    name: 'Felix',
+    alternateName: ['飞栗', '可了个乐', 'Kelegele'],
+    url: new URL('/about', Astro.site).href,
+    sameAs,
+  },
+};
+const schemas = schema ? [siteSchema, ...(Array.isArray(schema) ? schema : [schema])] : [siteSchema];
 ---
 
 <!doctype html>
@@ -21,6 +55,18 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemas)} />
     <slot name="head" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/style.min.css" rel="stylesheet" />

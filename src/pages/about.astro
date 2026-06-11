@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': new URL('/about#person', Astro.site).href,
+  name: 'Felix',
+  alternateName: ['飞栗', '可了个乐', 'Kelegele'],
+  url: new URL('/about', Astro.site).href,
+  description: 'Felix / Kelegele 是 AI 应用探索者和互联网从业者，关注 AI Agent、产品工作流、独立开发与创造实践。',
+  sameAs: ['https://github.com/kelegele', 'https://blog.kelegele.com'],
+};
 ---
 
-<BaseLayout title="本站与我 — 可了个乐" description="关于 Felix、关于本站、联系方式">
+<BaseLayout
+  title="本站与我 — 可了个乐"
+  description="关于 Felix / 飞栗 / Kelegele：AI 应用探索者，记录 AI Agent、产品工作流、独立开发与创造实践。"
+  schema={personSchema}
+>
   <article class="about">
     <h1>本站与我</h1>
 

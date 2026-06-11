@@ -10,9 +10,10 @@ const categories = [...new Set(allPosts.map(p => p.data.categorySlug || p.data.c
 const categoryMap = Object.fromEntries(
   allPosts.map(p => [p.data.categorySlug || p.data.category, p.data.category])
 );
+const homeDescription = '可了个乐是 Felix / Kelegele 的 AI 创造力博客，记录 AI Agent、产品工作流、独立开发、Vibe Coding 与创造实践。';
 ---
 
-<BaseLayout>
+<BaseLayout title="可了个乐 — AI 创造力博客" description={homeDescription}>
   <section class="hero">
     <h1 class="hero-title hero-ascii" aria-label="可了个乐">
       <pre aria-hidden="true">██    ██ ████████ ██       ████████  ██████  ████████ ██       ████████

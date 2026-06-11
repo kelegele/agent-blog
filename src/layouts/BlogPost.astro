@@ -11,15 +11,78 @@ const { entry, readingTime } = Astro.props;
 const { title, description, date, category } = entry.data;
 const formattedDate = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 const mdUrl = `/blog/${entry.id}.md`;
+const postUrl = new URL(`/blog/${entry.id}`, Astro.site).href;
+const categorySlug = entry.data.categorySlug || category;
+const categoryUrl = new URL(`/category/${categorySlug}`, Astro.site).href;
+const articleSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${postUrl}#article`,
+    headline: title,
+    description,
+    datePublished: date.toISOString(),
+    dateModified: date.toISOString(),
+    inLanguage: 'zh-CN',
+    mainEntityOfPage: postUrl,
+    url: postUrl,
+    author: {
+      '@type': 'Person',
+      '@id': new URL('/about#person', Astro.site).href,
+      name: 'Felix',
+      alternateName: ['飞栗', '可了个乐', 'Kelegele'],
+      url: new URL('/about', Astro.site).href,
+      sameAs: ['https://github.com/kelegele', 'https://blog.kelegele.com'],
+    },
+    publisher: {
+      '@type': 'Person',
+      '@id': new URL('/about#person', Astro.site).href,
+      name: 'Felix',
+      alternateName: ['飞栗', '可了个乐', 'Kelegele'],
+      url: new URL('/about', Astro.site).href,
+    },
+    isPartOf: {
+      '@type': 'Blog',
+      '@id': new URL('/#website', Astro.site).href,
+      name: '可了个乐',
+      url: new URL('/', Astro.site).href,
+    },
+    articleSection: category,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: '可了个乐',
+        item: new URL('/', Astro.site).href,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: category,
+        item: categoryUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: title,
+        item: postUrl,
+      },
+    ],
+  },
+];
 ---
 
-<BaseLayout title={`${title} — 可了个乐`} description={description}>
+<BaseLayout title={`${title} — 可了个乐`} description={description} type="article" schema={articleSchema}>
   <Fragment slot="head">
     <link rel="alternate" type="text/markdown" href={mdUrl} />
   </Fragment>
   <article class="post" id="post-article">
     <header class="post-hero">
-      <a class="post-category" href={`/category/${entry.data.categorySlug || category}`}>{category}</a>
+      <a class="post-category" href={`/category/${categorySlug}`}>{category}</a>
       <h1 class="post-title">{title}</h1>
       <p class="post-description">{description}</p>
       <div class="post-meta">

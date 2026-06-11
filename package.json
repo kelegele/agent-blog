@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "seo:check": "node scripts/check-seo.mjs",
     "astro": "astro"
   },
   "dependencies": {
