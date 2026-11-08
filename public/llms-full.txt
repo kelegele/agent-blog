@@ -18,6 +18,11 @@
 
 ## Blog Index
 
+- [project-handoff 使用指南：换 agent 不用从头再讲一遍](https://www.kelegele.com/blog/project-handoff-scene-guide)
+  - Date: 2026-11-09
+  - Category: 创造力
+  - Markdown: https://www.kelegele.com/blog/project-handoff-scene-guide.md
+  - Summary: 上午 Codex 开的会话，下午换 ZCode 接着干，新会话对项目一无所知？project-handoff-skill 把交接变成项目里的一组文件：新会话开工前先看交接状态再动手，跨客户端通用。本文按五个场景介绍它，附安装方法、触发话术与服务命令。
 - [agentsmd 使用指南：五个场景让 AI 不再重复踩坑](https://www.kelegele.com/blog/agentsmd-scene-guide)
   - Date: 2026-11-09
   - Category: 创造力
