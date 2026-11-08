@@ -18,6 +18,11 @@
 
 ## Blog Index
 
+- [agentsmd 发布后，我的四个设计假设全被证伪](https://www.kelegele.com/blog/agentsmd-skill-iteration-retrospective)
+  - Date: 2026-11-09
+  - Category: 创造力
+  - Markdown: https://www.kelegele.com/blog/agentsmd-skill-iteration-retrospective.md
+  - Summary: 发布一个开源 agent skill 七周后，agentsmd 的四个设计假设被真实使用逐一证伪：教训不是会话里唯一值得留下的东西，AI 生成的命令未必跑得通，用它的不全是程序员，发出去也不自然有人用。本文记录每个假设被打脸的现场，以及规则因此长成的样子。
 - [让 AI 记住教训，但别把 AGENTS.md 写成垃圾堆](https://www.kelegele.com/blog/agents-md-lessons-without-bloat)
   - Date: 2026-09-10
   - Category: 创造力
