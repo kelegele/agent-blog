@@ -65,10 +65,9 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 
 ## Skill Development Workflow
 
-- The canonical `blog-publish` skill source lives in `skill/SKILL.md`.
-- Do not edit `.agents/skills/blog-publish/SKILL.md` as the source of truth; it is a local installed copy.
-- When changing the skill locally, update `skill/SKILL.md` first, then refresh the local Codex copy with `npx skills add . -a codex` from the repository root.
-- After refreshing, inspect `.agents/skills/blog-publish/SKILL.md` or `skills-lock.json` if needed to confirm the installed copy matches the repository skill.
+- The canonical `blog-publish` skill source lives in `skill/SKILL.md` (git-managed).
+- The active copy agents actually load is the user-level `~/.pi/agent/skills/blog-publish/SKILL.md`, so the skill triggers from any project. There is intentionally no in-repo installed copy (`.agents/` was removed).
+- When changing the skill, update `skill/SKILL.md` first, then sync the active copy manually: `cp skill/SKILL.md ~/.pi/agent/skills/blog-publish/SKILL.md`. Forgetting this step means every project keeps running the stale version.
 
 ## UI/UX Design Rules
 
