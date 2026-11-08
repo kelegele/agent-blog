@@ -18,6 +18,11 @@
 
 ## Blog Index
 
+- [agentsmd 使用指南：五个场景让 AI 不再重复踩坑](https://www.kelegele.com/blog/agentsmd-scene-guide)
+  - Date: 2026-11-09
+  - Category: 创造力
+  - Markdown: https://www.kelegele.com/blog/agentsmd-scene-guide.md
+  - Summary: AI 每次开新会话都重复踩同一个坑？agentsmd-skill 把会话教训蒸馏成一行一条的可执行规则，写进项目根目录的 AGENTS.md。本文按五个真实场景介绍它的用法：固化教训、瘦身规范、冷启动、文档目录沉淀、记忆同步，附安装方法与触发话术。
 - [agentsmd 发布后，我的四个设计假设全被证伪](https://www.kelegele.com/blog/agentsmd-skill-iteration-retrospective)
   - Date: 2026-11-09
   - Category: 创造力
