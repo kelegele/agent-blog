@@ -61,6 +61,7 @@ Light/dark theme is controlled via `data-theme` attribute on `<html>`. Toggle lo
 - Run `pnpm build` before submitting to verify no build errors.
 - **Remote `main` auto-publishes the site.** Do not push to `origin/main` unless the user has explicitly confirmed they have locally experienced and approved the current result, or they explicitly asks to push after that approval context is clear.
 - Local commits are acceptable when requested, but pushing requires a fresh verification step because it triggers deployment.
+- Agent bash has no proxy env (zshrc helpers don't load non-interactively): push with `https_proxy=http://127.0.0.1:7892 git push`; plain `git push` times out.
 - When summarizing lessons learned for this repository, also harden durable workflow lessons into AGENTS guidance and memory instead of only replying in chat.
 
 ## Skill Development Workflow
