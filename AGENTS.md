@@ -115,6 +115,7 @@ Every blog post **must** add hyperlinks to any third-party tools, frameworks, li
 ## Cross-posting & Distribution
 
 - Rewritten copies for external platforms live in `crosspost/`; each platform gets an independent rewrite — never copy-paste the same text across platforms.
+- Primary links in cross-posted content point to this site (`www.kelegele.com/blog/...`); third-party links (GitHub) go in a self-reply under the post.
 - External APIs (Dev.to, X) reject non-browser user agents with 403: always send a browser UA header plus the proxy env above.
 - V2EX API sits behind a Cloudflare JS challenge that curl and CDP-driven browsers cannot pass: no API automation, post manually from a logged-in browser.
 - Post to X via OAuth 2.0 PKCE only — OAuth 1.0a tokens keep a permission snapshot that 403s (`oauth1-permissions`) regardless of app settings. Token + refresh live in `~/.config/agent-blog/x-twitter.env` (outside git, chmod 600).
