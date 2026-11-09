@@ -76,7 +76,7 @@ const articleSchema = [
 ];
 ---
 
-<BaseLayout title={`${title} — 可了个乐`} description={description} type="article" schema={articleSchema}>
+<BaseLayout title={`${title} — 可了个乐`} description={description} image={`/open-graph/blog/${entry.id}.png`} type="article" schema={articleSchema}>
   <Fragment slot="head">
     <link rel="alternate" type="text/markdown" href={mdUrl} />
   </Fragment>
