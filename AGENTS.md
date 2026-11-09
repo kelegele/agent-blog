@@ -114,10 +114,13 @@ Every blog post **must** add hyperlinks to any third-party tools, frameworks, li
 
 ## Cross-posting & Distribution
 
+- Per-post OG images generate at build to `/open-graph/blog/<slug>.png`; write the route by hand (`getStaticPaths` + `GET` with `generateOpenGraphImage`) — the `OGImageRoute` helper breaks under Astro 6.
 - Rewritten copies for external platforms live in `crosspost/`; each platform gets an independent rewrite — never copy-paste the same text across platforms.
 - Primary links in cross-posted content point to this site (`www.kelegele.com/blog/...`); third-party links (GitHub) go in a self-reply under the post.
 - External APIs (Dev.to, X) reject non-browser user agents with 403: always send a browser UA header plus the proxy env above.
+- Dev.to articles created via `body_markdown` require a full frontmatter (title/description/tags/canonical_url/published) on every PUT; bare `cover_image` field updates are silently ignored.
 - V2EX API sits behind a Cloudflare JS challenge that curl and CDP-driven browsers cannot pass: no API automation, post manually from a logged-in browser.
-- Post to X via OAuth 2.0 PKCE only — OAuth 1.0a tokens keep a permission snapshot that 403s (`oauth1-permissions`) regardless of app settings. Token + refresh live in `~/.config/agent-blog/x-twitter.env` (outside git, chmod 600).
+- Post to X via OAuth 2.0 PKCE only — OAuth 1.0a tokens keep a permission snapshot that 403s (`oauth1-permissions`) regardless of app settings. Credentials + full flow (incl. the one manual user step: browser Authorize) documented in `~/.config/agent-blog/x-twitter.env` (outside git, chmod 600).
+- X caches og:image at post time — after changing a post's image, delete and repost to refresh the card.
 - Before submitting to an Awesome list, read its CONTRIBUTING: gates differ wildly (web-form-only, minimum installs, or copying skill files into their repo — avoid that last one).
 - Attribute referral traffic via GitHub Insights → Traffic referrers and Vercel Analytics.
